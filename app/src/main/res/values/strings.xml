@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NutriChoiceCompose</string>
+    <string name="welcome_greeting">Welcome to NutriChoice!</string>
 </resources>
