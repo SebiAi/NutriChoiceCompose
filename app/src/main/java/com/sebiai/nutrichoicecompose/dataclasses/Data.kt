@@ -1,0 +1,138 @@
+package com.sebiai.nutrichoicecompose.dataclasses
+
+import com.sebiai.nutrichoicecompose.R
+
+import me.xdrop.fuzzywuzzy.FuzzySearch
+import me.xdrop.fuzzywuzzy.model.BoundExtractedResult
+import java.util.Collections
+import java.util.stream.Collectors
+
+object Data {
+    private val testFoodSet: MutableList<AFood> = mutableListOf()
+
+    init {
+        val lasagneNutrients = NutritionValues(
+            calories = 145.0, protein = 5.7, fat = 7.5,
+            carbs = 13.3, salt = 0.0, sugar = 0.0
+        )
+        val schnitzelNutrients = NutritionValues(
+            calories = 145.0, protein = 55.7, fat = 17.5,
+            carbs = 13.3, salt = 10.0, sugar = 4.0
+        )
+        val potatoSaladNutrients = NutritionValues(
+            calories = 455.0, protein = 1.6, fat = 4.6,
+            carbs = 14.6, salt = 1.3, sugar = 3.2
+        )
+        val dumplingNutrients = NutritionValues(
+            calories = 519.0, protein = 1.6, fat = 3.8,
+            carbs = 22.0, salt = 0.1, sugar = 0.7
+        )
+        val carbonaraNutrients = NutritionValues(
+            calories = 206.0, protein = 5.0, fat = 12.0,
+            carbs = 18.0, salt = 1.0, sugar = 1.0
+        )
+        val margheritaNutrients = NutritionValues(
+            calories = 876.0, protein = 8.5, fat = 5.0,
+            carbs = 31.0, salt = 1.0, sugar = 3.3
+        )
+
+
+        val tomatoPasteNutrients = NutritionValues(
+            calories = 113.0, protein = 5.3, fat = 0.6,
+            carbs = 17.0, salt = 5.3, sugar = 13.0
+        )
+        val beefNutrients = NutritionValues(
+            calories = 288.0, protein = 26.33, fat = 19.54,
+            carbs = 0.0, salt = 0.96, sugar = 0.0
+        )
+        val porkNutrients = NutritionValues(
+            calories = 129.0, protein = 20.0, fat = 5.0,
+            carbs = 0.0, salt = 0.2, sugar = 0.0
+        )
+        val carrotsNutrients = NutritionValues(
+            calories = 25.0, protein = 1.0, fat = 0.2,
+            carbs = 4.8, salt = 0.0, sugar = 0.0
+        )
+        val wheatNutrients = NutritionValues(
+            calories = 338.0, protein = 11.0, fat = 1.1,
+            carbs = 69.0, salt = 0.01, sugar = 0.5
+        )
+        val milkNutrients = NutritionValues(
+            calories = 65.0, protein = 3.2, fat = 3.5,
+            carbs = 4.8, salt = 0.1, sugar = 4.8
+        )
+        val saltNutrients = NutritionValues(
+            calories = 0.0, protein = 0.0, fat = 0.0,
+            carbs = 0.0, salt = 99.9, sugar = 0.0
+        )
+        val onionNutrients = NutritionValues(
+            calories = 40.0, protein = 1.1, fat = 0.1,
+            carbs = 1.2, salt = 0.001, sugar = 4.0
+        )
+        val vinegarNutrients = NutritionValues(
+            calories = 20.0, protein = 0.4, fat = 0.0,
+            carbs = 1.0, salt = 0.001, sugar = 1.0
+        )
+        val potatoNutrients = NutritionValues(
+            calories = 73.0, protein = 2.0, fat = 0.01,
+            carbs = 16.0, salt = 0.05, sugar = 1.0
+        )
+        val breadcrumbsNutrients = NutritionValues(
+            calories = 358.0, protein = 10.0, fat = 2.0,
+            carbs = 74.0, salt = 1.0, sugar = 4.0
+        )
+        val parsleyNutrients = NutritionValues(
+            calories = 53.0, protein = 4.0, fat = 0.4,
+            carbs = 7.0, salt = 0.2, sugar = 5.0
+        )
+        val baconNutrients = NutritionValues(
+            calories = 153.0, protein = 21.0, fat = 8.0,
+            carbs = 0.0, salt = 0.12, sugar = 0.0
+        )
+        val spaghettiNutrients = NutritionValues(
+            calories = 1523.0, protein = 13.0, fat = 2.0,
+            carbs = 71.0, salt = 0.01, sugar = 3.5
+        )
+        val eggNutrients = NutritionValues(
+            calories = 154.0, protein = 13.0, fat = 11.0,
+            carbs = 1.0, salt = 0.32, sugar = 1.0
+        )
+        val mozzarellaNutrients = NutritionValues(
+            calories = 290.0, protein = 19.0, fat = 23.0,
+            carbs = 2.0, salt = 0.5, sugar = 0.0
+        )
+        val tomatoNutrients = NutritionValues(
+            calories = 17.0, protein = 1.0, fat = 0.23,
+            carbs = 3.0, salt = 0.03, sugar = 3.0
+        )
+
+
+        val tomatoPaste = Ingredient("Tomato paste", R.drawable.tomato_paste_image, tomatoPasteNutrients, AFood.Price.LOW, AFood.Score.C, AFood.Score.C, AFood.DietaryPreferences.VEGAN)
+        // TODO: [Now] Add rest of the ingredients and meals
+
+        testFoodSet.apply {
+            add(tomatoPaste)
+        }
+    }
+
+    fun search(query: String): List<AFood> {
+        // TODO: Implement filter
+
+        // Search using fuzzy search
+        val matches: List<BoundExtractedResult<AFood>> = FuzzySearch.extractAll(query, testFoodSet, AFood::searchString)
+        val sortedMatchesDescending: List<BoundExtractedResult<AFood>> = matches.stream().sorted(Collections.reverseOrder()).collect(Collectors.toList())
+
+        if (sortedMatchesDescending.isEmpty()) {
+            return emptyList()
+        }
+
+        // Get max score
+        val maxScore: Int = sortedMatchesDescending[0].score
+
+        // Return results
+        return sortedMatchesDescending.stream()
+            .filter{x->x.score >= maxScore * 0.3} // Only get top 70% of results
+            .map(BoundExtractedResult<AFood>::getReferent) // Get the actual object
+            .collect(Collectors.toList())
+    }
+}
