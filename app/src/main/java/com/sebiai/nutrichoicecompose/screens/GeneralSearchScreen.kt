@@ -29,7 +29,7 @@ import com.sebiai.nutrichoicecompose.R
 import com.sebiai.nutrichoicecompose.composables.FilterSearchBar
 import com.sebiai.nutrichoicecompose.composables.FoodCard
 import com.sebiai.nutrichoicecompose.composables.FoodCardType
-import com.sebiai.nutrichoicecompose.composables.FoodCardBig
+import com.sebiai.nutrichoicecompose.composables.determineCustomizableChips
 import com.sebiai.nutrichoicecompose.dataclasses.Meal
 import com.sebiai.nutrichoicecompose.screens.viewmodels.GeneralSearchScreenViewModel
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
@@ -93,7 +93,7 @@ fun GeneralSearchScreen(
                     title = it.title,
                     priceString = it.getPriceString(LocalContext.current),
                     isRestaurantFood = it is Meal,
-                    customizableChips = listOf() // TODO: [NOW + 2] Implement chips
+                    customizableChips = determineCustomizableChips(LocalContext.current, it, uiState.nutritionPreferences)
                 )
             }
         }

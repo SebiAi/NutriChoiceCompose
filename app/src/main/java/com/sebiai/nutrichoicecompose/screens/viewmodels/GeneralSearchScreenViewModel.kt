@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
 import com.sebiai.nutrichoicecompose.dataclasses.Data
 import com.sebiai.nutrichoicecompose.dataclasses.FilterState
+import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,6 +17,8 @@ data class GeneralSearchScreenUiState(
     val searchQuery: String = "",
     val searchResults: List<AFood> = listOf(Data.search("schn", FilterState())[0]),
     val filterState: FilterState = FilterState(),
+    val nutritionPreferences: NutritionPreferences = NutritionPreferences(true, true, true, true, true, true, true, true),
+
     val resultScrollState: LazyListState = LazyListState()
 )
 
@@ -49,6 +52,14 @@ class GeneralSearchScreenViewModel : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(
                 filterState = newFilterState
+            )
+        }
+    }
+
+    fun updateNutritionPreferences(newNutritionPreferences: NutritionPreferences) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                nutritionPreferences = newNutritionPreferences
             )
         }
     }
