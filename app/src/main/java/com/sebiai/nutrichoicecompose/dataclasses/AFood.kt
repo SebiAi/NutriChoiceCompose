@@ -59,7 +59,7 @@ abstract class AFood(
     }
     fun getGreenScoreImage(context: Context): ImageVector {
         @DrawableRes
-        val greenScoreResource = when (nutriScore) {
+        val greenScoreResource = when (greenScore) {
             Score.A -> R.drawable.green_score_a
             Score.B -> R.drawable.green_score_b
             Score.C -> R.drawable.green_score_c
