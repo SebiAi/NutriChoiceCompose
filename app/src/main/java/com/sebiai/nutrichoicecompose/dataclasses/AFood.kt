@@ -23,7 +23,7 @@ abstract class AFood(
 ) : Serializable {
     enum class Price { LOW, MEDIUM, HIGH }
     enum class Score { A, B, C, D, E, NA }
-    enum class DietaryPreferences { NONE, VEGAN, VEGETARIAN, UNKNOWN }
+    enum class DietaryPreferences { NONE, VEGAN, VEGETARIAN }
 
     open val searchString: String
         get() = title
