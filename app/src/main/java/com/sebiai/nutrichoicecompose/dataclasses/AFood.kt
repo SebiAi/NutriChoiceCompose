@@ -7,9 +7,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import com.sebiai.nutrichoicecompose.R
-import kotlinx.serialization.Serializable
+import java.io.Serializable
 
-@Serializable
 abstract class AFood(
     val title: String,
     @field:DrawableRes
@@ -21,7 +20,7 @@ abstract class AFood(
     val greenScore: Score,
 
     val dietaryPreferences: DietaryPreferences
-) {
+) : Serializable {
     enum class Price { LOW, MEDIUM, HIGH }
     enum class Score { A, B, C, D, E, NA }
     enum class DietaryPreferences { NONE, VEGAN, VEGETARIAN, UNKNOWN }
