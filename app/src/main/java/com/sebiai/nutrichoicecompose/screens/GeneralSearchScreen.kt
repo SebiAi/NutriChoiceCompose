@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,6 +41,8 @@ fun GeneralSearchScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    val lazyListState = rememberLazyListState()
+
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -65,6 +68,7 @@ fun GeneralSearchScreen(
             onSearch = { query: String ->
                 Log.d(null, "Searched with query \"$query\"")
                 viewModel.performSearch(query, uiState.filterState)
+                lazyListState.requestScrollToItem(0)
             },
             onQueryChanged = viewModel::updateQuery,
             onClearQuery = { viewModel.updateQuery("") },
@@ -80,7 +84,8 @@ fun GeneralSearchScreen(
         Spacer(modifier = Modifier.height(6.dp))
         LazyColumn (
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            state = lazyListState
         ) {
             items(items = uiState.searchResults) {
                 FoodCardBig(
