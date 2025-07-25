@@ -90,7 +90,9 @@ fun FoodCardBig(
             Column (
                 modifier = Modifier.padding(10.dp)
             ) {
-                Row {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
                         modifier = Modifier.weight(1F),
                         style = MaterialTheme.typography.bodyLarge,
