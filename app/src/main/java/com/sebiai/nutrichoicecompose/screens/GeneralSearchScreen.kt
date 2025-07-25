@@ -30,6 +30,7 @@ import com.sebiai.nutrichoicecompose.R
 import com.sebiai.nutrichoicecompose.composables.FilterSearchBar
 import com.sebiai.nutrichoicecompose.composables.FoodCardBig
 import com.sebiai.nutrichoicecompose.dataclasses.Data
+import com.sebiai.nutrichoicecompose.dataclasses.FilterState
 import com.sebiai.nutrichoicecompose.dataclasses.Meal
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
@@ -41,7 +42,7 @@ fun GeneralSearchScreen(modifier: Modifier = Modifier) {
     ) {
         // TODO: [Now + 1] Move to ViewModel bc. Ingredient class fails to pack into parcel
         var searchQuery by rememberSaveable { mutableStateOf("") }
-        var searchResults by rememberSaveable { mutableStateOf(listOf(Data.search("schn")[0])) }
+        var searchResults by rememberSaveable { mutableStateOf(listOf(Data.search("schn", FilterState())[0])) }
 
         val searchBarOnSearch: (String) -> Unit = { query: String ->
             Log.d(null, "Searched with query \"$query\"")

@@ -165,8 +165,44 @@ object Data {
         }
     }
 
-    fun search(query: String): List<AFood> {
-        // TODO: Implement filter
+    private fun applyFilter(foods: List<AFood>, filters: FilterState): List<AFood> {
+        /*
+         * Filter explained
+         *
+         * +---+------------------+-------------+------+
+         * | i | filter.isVegan() | x.isVegan() | pass |
+         * +---+------------------+-------------+------+
+         * | 1 | F                | F           | T    |
+         * | 2 | F                | T           | T    |
+         * | 3 | T                | F           | F    |
+         * | 4 | T                | T           | T    |
+         * +---+------------------+-------------+------+
+         *
+         * For 1 & 2: !filter.isVegan()
+         * For 3 & 4: x.isVegan()
+         *
+         * => !filter.isVegan() || x.isVegan()
+         */
+        return foods.stream()
+            .filter{ x -> !filters.vegan || x.vegan }
+            .filter{ x -> !filters.vegetarian || x.vegetarian }
+            .filter{ x -> !filters.healthy || x.healthy }
+            .filter{ x -> !filters.ecoFriendly || x.ecoFriendly }
+            .filter{ x -> !filters.highCalories || x.highCalories }
+            .filter{ x -> !filters.lowCalories || x.lowCalories }
+            .filter{ x -> !filters.highProtein || x.highProtein }
+            .filter{ x -> !filters.lowFat || x.lowFat }
+            .filter{ x -> !filters.highCarbs || x.highCarbs }
+            .filter{ x -> !filters.lowCarbs || x.lowCarbs }
+            .filter{ x -> !filters.costEfficient || x.costEffective }
+            .collect(Collectors.toList())
+    }
+
+    fun search(query: String, filters: FilterState): List<AFood> {
+        // If the query is empty we only apply filter and do not search
+        if (query.isEmpty()) {
+            return applyFilter(testFoodSet, filters)
+        }
 
         // Search using fuzzy search
         val matches: List<BoundExtractedResult<AFood>> = FuzzySearch.extractAll(query, testFoodSet, AFood::searchString)
@@ -180,9 +216,12 @@ object Data {
         val maxScore: Int = sortedMatchesDescending[0].score
 
         // Return results
-        return sortedMatchesDescending.stream()
-            .filter{x->x.score >= maxScore * 0.3} // Only get top 70% of results
-            .map(BoundExtractedResult<AFood>::getReferent) // Get the actual object
-            .collect(Collectors.toList())
+        return applyFilter(
+            sortedMatchesDescending.stream()
+                    .filter{x->x.score >= maxScore * 0.3} // Only get top 70% of results
+                    .map(BoundExtractedResult<AFood>::getReferent) // Get the actual object
+                    .collect(Collectors.toList()),
+            filters
+        )
     }
 }
