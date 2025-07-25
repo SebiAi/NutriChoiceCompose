@@ -6,4 +6,22 @@
 
     <string name="price_symbol">$</string>
     <string name="price_placeholder_symbol">•</string>
+
+    <string name="preferences_chip_protein">Protein</string>
+    <string name="preferences_chip_carbs">Carbs</string>
+    <string name="preferences_chip_fats">Fats</string>
+    <string name="preferences_chip_calories">Calories</string>
+    <string name="preferences_chip_eco_friendly">Eco Friendly</string>
+    <string name="preferences_chip_healthy">Healthy</string>
+    <string name="preferences_dietary_header">Select dietary needs:</string>
+    <string name="preferences_chip_vegetarian">Vegetarian</string>
+    <string name="preferences_chip_vegan">Vegan</string>
+
+    <string name="low_calories">Low Calories</string>
+    <string name="high_calories">High Calories</string>
+    <string name="low_fat">Low Fat</string>
+    <string name="low_carbs">Low Carbs</string>
+    <string name="high_carbs">High Carbs</string>
+    <string name="high_protein">High Protein</string>
+    <string name="cost_efficient">Cost Efficient</string>
 </resources>
