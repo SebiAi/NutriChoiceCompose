@@ -1,5 +1,6 @@
 package com.sebiai.nutrichoicecompose.screens.viewmodels
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.ViewModel
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
 import com.sebiai.nutrichoicecompose.dataclasses.Data
@@ -14,7 +15,8 @@ import kotlinx.coroutines.flow.update
 data class GeneralSearchScreenUiState(
     val searchQuery: String = "",
     val searchResults: List<AFood> = listOf(Data.search("schn", FilterState())[0]),
-    val filterState: FilterState = FilterState()
+    val filterState: FilterState = FilterState(),
+    val resultScrollState: LazyListState = LazyListState()
 )
 
 class GeneralSearchScreenViewModel : ViewModel() {

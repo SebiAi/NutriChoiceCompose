@@ -41,8 +41,6 @@ fun GeneralSearchScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val lazyListState = rememberLazyListState()
-
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -68,7 +66,7 @@ fun GeneralSearchScreen(
             onSearch = { query: String ->
                 Log.d(null, "Searched with query \"$query\"")
                 viewModel.performSearch(query, uiState.filterState)
-                lazyListState.requestScrollToItem(0)
+                uiState.resultScrollState.requestScrollToItem(0)
             },
             onQueryChanged = viewModel::updateQuery,
             onClearQuery = { viewModel.updateQuery("") },
@@ -85,7 +83,7 @@ fun GeneralSearchScreen(
         LazyColumn (
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
-            state = lazyListState
+            state = uiState.resultScrollState
         ) {
             items(items = uiState.searchResults) {
                 FoodCardBig(
