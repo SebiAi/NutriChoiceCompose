@@ -123,11 +123,11 @@ fun FoodCardBig(
     }
 }
 
-private data class FoodCardPreviewData(val title: String, val isRestaurantFood: Boolean, val customizables: List<String>)
-private class FoodCardBigProvider: PreviewParameterProvider<FoodCardPreviewData> {
-    override val values: Sequence<FoodCardPreviewData> = listOf(
-        FoodCardPreviewData("Title", true, listOf("Customizable1", "Customizable2")),
-        FoodCardPreviewData(
+private data class FoodCardPreviewBigData(val title: String, val isRestaurantFood: Boolean, val customizables: List<String>)
+private class FoodCardBigProvider: PreviewParameterProvider<FoodCardPreviewBigData> {
+    override val values: Sequence<FoodCardPreviewBigData> = listOf(
+        FoodCardPreviewBigData("Title", true, listOf("Customizable1", "Customizable2")),
+        FoodCardPreviewBigData(
             "This is a very long title that will hopefully be to long for the card for real now this is important for testing",
             false, listOf("Customizable1", "Customizable2", "Customizable3", "Customizable4")
         ),
@@ -139,7 +139,7 @@ private class FoodCardBigProvider: PreviewParameterProvider<FoodCardPreviewData>
 @Composable
 private fun FoodCardBigPreview(
     @PreviewParameter(FoodCardBigProvider::class)
-    data: FoodCardPreviewData
+    data: FoodCardPreviewBigData
 ) {
     NutriChoiceComposeTheme {
         FoodCardBig(
