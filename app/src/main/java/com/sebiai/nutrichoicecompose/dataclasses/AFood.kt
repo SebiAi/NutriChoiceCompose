@@ -22,12 +22,24 @@ abstract class AFood(
 
     val dietaryPreferences: DietaryPreferences
 ) {
+    enum class Price { LOW, MEDIUM, HIGH }
+    enum class Score { A, B, C, D, E, NA }
+    enum class DietaryPreferences { NONE, VEGAN, VEGETARIAN, UNKNOWN }
+
     open val searchString: String
         get() = title
 
-    enum class Price { LOW, MEDIUM, HIGH }
-    enum class Score { A, B, C, D, E, NA }
-    enum class DietaryPreferences { VEGAN, VEGETARIAN, UNKNOWN }
+    val highProtein: Boolean get() = nutritionValues.protein >= 20
+    val highCalories: Boolean get() = nutritionValues.calories >= 300
+    val lowCalories: Boolean get() = nutritionValues.calories < 50
+    val highCarbs: Boolean get() = nutritionValues.carbs >= 28
+    val lowCarbs: Boolean get() = nutritionValues.carbs <= 10
+    val lowFat: Boolean get() = nutritionValues.fat <= 3
+    val vegan: Boolean get() = dietaryPreferences == DietaryPreferences.VEGAN
+    val vegetarian: Boolean get() = dietaryPreferences == DietaryPreferences.VEGAN || dietaryPreferences == DietaryPreferences.VEGETARIAN
+    val ecoFriendly: Boolean get() = greenScore == Score.B || greenScore == Score.A
+    val healthy: Boolean get() = nutriScore == Score.B || nutriScore == Score.A
+    val costEffective: Boolean get() = price == Price.LOW
 
     fun getPriceString(context: Context): String {
         val priceSymbol = context.getString(R.string.price_symbol)
