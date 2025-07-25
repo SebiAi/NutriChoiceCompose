@@ -27,6 +27,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sebiai.nutrichoicecompose.R
 import com.sebiai.nutrichoicecompose.composables.FilterSearchBar
+import com.sebiai.nutrichoicecompose.composables.FoodCard
+import com.sebiai.nutrichoicecompose.composables.FoodCardType
 import com.sebiai.nutrichoicecompose.composables.FoodCardBig
 import com.sebiai.nutrichoicecompose.dataclasses.Meal
 import com.sebiai.nutrichoicecompose.screens.viewmodels.GeneralSearchScreenViewModel
@@ -85,7 +87,8 @@ fun GeneralSearchScreen(
             state = uiState.resultScrollState
         ) {
             items(items = uiState.searchResults) {
-                FoodCardBig(
+                FoodCard(
+                    type = FoodCardType.BIG,
                     image = it.getImage(LocalContext.current),
                     title = it.title,
                     priceString = it.getPriceString(LocalContext.current),
