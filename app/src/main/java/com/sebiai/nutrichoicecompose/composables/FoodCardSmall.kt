@@ -1,0 +1,122 @@
+package com.sebiai.nutrichoicecompose.composables
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SuggestionChip
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.dp
+import com.sebiai.nutrichoicecompose.R
+import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
+
+@Composable
+fun FoodCardSmall(
+    image: ImageBitmap,
+    title: String,
+    priceString: String,
+    customizableChips: List<String>,
+
+    modifier: Modifier = Modifier
+) {
+    Card (
+        modifier = modifier
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                modifier = Modifier.weight(1F).aspectRatio(1F),
+                alignment = Alignment.Center,
+                bitmap = image,
+                contentDescription = null,
+                contentScale = ContentScale.Crop
+            )
+            Column(
+                modifier = Modifier.weight(2F).padding(10.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        modifier = Modifier.weight(1F),
+                        style = MaterialTheme.typography.bodyLarge,
+                        text = title,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        style = MaterialTheme.typography.labelLarge,
+                        text = priceString,
+                        fontWeight = FontWeight.Bold,
+                        fontStyle = FontStyle.Italic
+                    )
+                }
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                )
+                {
+                    items(items = customizableChips) {
+                        SuggestionChip(
+                            onClick = {},
+                            label = { Text(text = it, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold) }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+private data class FoodCardPreviewSmallData(val title: String, val customizables: List<String>)
+private class FoodCardSmallProvider: PreviewParameterProvider<FoodCardPreviewSmallData> {
+    override val values: Sequence<FoodCardPreviewSmallData> = listOf(
+        FoodCardPreviewSmallData("Title", listOf("Customizable1", "Customizable2")),
+        FoodCardPreviewSmallData(
+            "This is a very long title that will hopefully be to long for the card for real now this is important for testing",
+            listOf("Customizable1", "Customizable2", "Customizable3", "Customizable4")
+        ),
+    ).asSequence()
+
+}
+
+@PreviewLightDark
+@Composable
+private fun FoodCardBigPreview(
+    @PreviewParameter(FoodCardSmallProvider::class)
+    data: FoodCardPreviewSmallData
+) {
+    NutriChoiceComposeTheme {
+        FoodCardSmall(
+            image = ImageBitmap.imageResource(R.drawable.tomato_paste_image),
+            title = data.title,
+            priceString = "$$$",
+            customizableChips = data.customizables
+        )
+    }
+}
