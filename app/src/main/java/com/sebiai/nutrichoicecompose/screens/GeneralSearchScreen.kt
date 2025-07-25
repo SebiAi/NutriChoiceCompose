@@ -15,9 +15,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -26,28 +23,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sebiai.nutrichoicecompose.R
 import com.sebiai.nutrichoicecompose.composables.FilterSearchBar
 import com.sebiai.nutrichoicecompose.composables.FoodCardBig
-import com.sebiai.nutrichoicecompose.dataclasses.Data
-import com.sebiai.nutrichoicecompose.dataclasses.FilterState
 import com.sebiai.nutrichoicecompose.dataclasses.Meal
+import com.sebiai.nutrichoicecompose.screens.viewmodels.GeneralSearchScreenViewModel
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GeneralSearchScreen(modifier: Modifier = Modifier) {
+fun GeneralSearchScreen(
+    modifier: Modifier = Modifier,
+    viewModel: GeneralSearchScreenViewModel = viewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
-        // TODO: [Now + 1] Move to ViewModel bc. Ingredient class fails to pack into parcel
-        var searchQuery by rememberSaveable { mutableStateOf("") }
-        var searchResults by rememberSaveable { mutableStateOf(listOf(Data.search("schn", FilterState())[0])) }
-
-        val searchBarOnSearch: (String) -> Unit = { query: String ->
-            Log.d(null, "Searched with query \"$query\"")
-        }
-
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             text = stringResource(R.string.welcome_greeting),
@@ -66,10 +61,13 @@ fun GeneralSearchScreen(modifier: Modifier = Modifier) {
         )
         FilterSearchBar(
             modifier = Modifier.padding(0.dp, 12.dp),
-            query = searchQuery,
-            onSearch = searchBarOnSearch,
-            onQueryChanged = { searchQuery = it },
-            onClearQuery = { searchQuery = "" },
+            query = uiState.searchQuery,
+            onSearch = { query: String ->
+                Log.d(null, "Searched with query \"$query\"")
+                viewModel.performSearch(query, uiState.filterState)
+            },
+            onQueryChanged = viewModel::updateQuery,
+            onClearQuery = { viewModel.updateQuery("") },
             onFilterClicked = {},
             hint = "Start searching"
         )
@@ -84,7 +82,7 @@ fun GeneralSearchScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            items(items = searchResults) {
+            items(items = uiState.searchResults) {
                 FoodCardBig(
                     image = it.getImage(LocalContext.current),
                     title = it.title,
