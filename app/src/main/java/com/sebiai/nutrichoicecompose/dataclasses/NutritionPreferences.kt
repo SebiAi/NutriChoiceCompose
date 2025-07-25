@@ -11,4 +11,10 @@ data class NutritionPreferences(
     val healthy: Boolean,
     val vegan: Boolean,
     val vegetarian: Boolean
-) : Serializable
+) : Serializable {
+    constructor() : this(
+        false, false, false,
+        false, false, false,
+        false, false
+    )
+}
