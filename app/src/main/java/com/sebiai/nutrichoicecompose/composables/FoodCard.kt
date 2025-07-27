@@ -160,8 +160,8 @@ fun TitleAndMoneyRow(
     modifier: Modifier = Modifier,
     fontScale: Double = 1.0
 ) {
-    val titleStyle = MaterialTheme.typography.bodyLarge
-    val priceStyle = MaterialTheme.typography.labelLarge
+    val titleStyle = MaterialTheme.typography.headlineSmall
+    val priceStyle = MaterialTheme.typography.bodyLarge
     val titleFontSize = titleStyle.fontSize.times(fontScale)
     val priceFontSize = priceStyle.fontSize.times(fontScale)
 
@@ -205,7 +205,7 @@ private fun CustomizablesRow(
                 label = {
                     Text(
                         text = it,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold
                     )
                 }

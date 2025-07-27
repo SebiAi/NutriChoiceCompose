@@ -85,7 +85,7 @@ fun FoodDetailScreen(
             TitleAndMoneyRow(
                 title = food.title,
                 priceString = food.getPriceString(LocalContext.current),
-                fontScale = 1.7
+                fontScale = 1.3
             )
             if (isRestaurantFood) {
                 val meal: Meal = food
@@ -97,13 +97,13 @@ fun FoodDetailScreen(
                 )
             }
             Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(12.dp)
             )
             NutritionTable(
                 nutritionValues = food.nutritionValues
             )
             Column(
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(8.dp, 12.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
