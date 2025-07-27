@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">NutriChoiceCompose</string>
+    <string name="welcome_greeting">Welcome to NutriChoice!</string>
 
     <string name="settings_screen_title">Settings</string>
-    <string name="welcome_greeting">Welcome to NutriChoice!</string>
+    <string name="food_detail_screen_title">Details</string>
 
     <string name="price_symbol">$</string>
     <string name="price_placeholder_symbol">•</string>

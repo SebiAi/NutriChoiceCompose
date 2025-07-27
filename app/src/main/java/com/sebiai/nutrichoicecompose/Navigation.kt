@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.sebiai.nutrichoicecompose.dataclasses.Data
+import com.sebiai.nutrichoicecompose.screens.FoodDetailScreen
 import com.sebiai.nutrichoicecompose.screens.GeneralSearchScreen
 import com.sebiai.nutrichoicecompose.screens.SettingsScreen
 import kotlinx.serialization.Serializable
@@ -41,6 +42,12 @@ fun AppNavHost(
         }
         composable<SettingsNavRoute> {
             SettingsScreen()
+        }
+        composable<FoodDetailScreenNavRoute> {
+            val navRouteObject: FoodDetailScreenNavRoute = it.toRoute()
+
+            val food = Data.getFoodById(navRouteObject.foodId)
+            FoodDetailScreen(food = food!!)
         }
     }
 }

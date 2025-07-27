@@ -1,6 +1,7 @@
 package com.sebiai.nutrichoicecompose.screens
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,6 +31,7 @@ import com.sebiai.nutrichoicecompose.composables.FilterSearchBar
 import com.sebiai.nutrichoicecompose.composables.FoodCard
 import com.sebiai.nutrichoicecompose.composables.FoodCardType
 import com.sebiai.nutrichoicecompose.composables.determineCustomizableChips
+import com.sebiai.nutrichoicecompose.dataclasses.AFood
 import com.sebiai.nutrichoicecompose.dataclasses.Meal
 import com.sebiai.nutrichoicecompose.screens.viewmodels.GeneralSearchScreenViewModel
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
@@ -37,6 +39,7 @@ import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GeneralSearchScreen(
+    onFoodCardClicked: (AFood) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: GeneralSearchScreenViewModel = viewModel()
 ) {
@@ -88,6 +91,9 @@ fun GeneralSearchScreen(
         ) {
             items(items = uiState.searchResults) {
                 FoodCard(
+                    modifier = Modifier.clickable(
+                        onClick = { onFoodCardClicked(it) }
+                    ),
                     type = FoodCardType.BIG,
                     image = it.getImage(LocalContext.current),
                     title = it.title,
@@ -107,7 +113,8 @@ private fun GeneralSearchScreenPreview() {
         GeneralSearchScreen(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(12.dp)
+                .padding(12.dp),
+            onFoodCardClicked = {}
         )
     }
 }

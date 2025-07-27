@@ -51,6 +51,7 @@ fun MainActivityContent(modifier: Modifier = Modifier) {
             val titleRes = when (routeQualifiedName) {
                 GeneralSearchNavRoute::class.qualifiedName!! -> R.string.app_name
                 SettingsNavRoute::class.qualifiedName!! -> R.string.settings_screen_title
+                FoodDetailScreenNavRoute::class.qualifiedName!! -> R.string.food_detail_screen_title
                 else -> null
             }
             appBarTitle = titleRes?.let { controller.context.getString(it) }?:""
