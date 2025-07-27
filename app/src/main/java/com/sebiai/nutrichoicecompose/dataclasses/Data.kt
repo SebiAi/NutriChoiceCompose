@@ -224,4 +224,8 @@ object Data {
             filters
         )
     }
+
+    fun getFoodById(id: String): AFood? {
+        return testFoodSet.find { it.id == id }
+    }
 }
