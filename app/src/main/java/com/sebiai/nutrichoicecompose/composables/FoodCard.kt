@@ -91,8 +91,7 @@ private fun FoodCardBig(
                 )
                 if (isRestaurantFood) {
                     RestaurantIndicatorIcon(
-                        modifier = Modifier.offset((-12).dp, (12).dp),
-                        shadowElevation = 12.dp
+                        modifier = Modifier.offset((-12).dp, (12).dp)
                     )
                 }
             }
@@ -155,18 +154,26 @@ private fun FoodCardSmall(
 }
 
 @Composable
-private fun TitleAndMoneyRow(
+fun TitleAndMoneyRow(
     title: String,
     priceString: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    fontScale: Double = 1.0
 ) {
+    val titleStyle = MaterialTheme.typography.bodyLarge
+    val priceStyle = MaterialTheme.typography.labelLarge
+    val titleFontSize = titleStyle.fontSize.times(fontScale)
+    val priceFontSize = priceStyle.fontSize.times(fontScale)
+
+
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             modifier = Modifier.weight(1F),
-            style = MaterialTheme.typography.bodyLarge,
+            style = titleStyle,
+            fontSize = titleFontSize,
             text = title,
             fontWeight = FontWeight.Bold,
             maxLines = 2,
@@ -174,7 +181,8 @@ private fun TitleAndMoneyRow(
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            style = MaterialTheme.typography.labelLarge,
+            style = priceStyle,
+            fontSize = priceFontSize,
             text = priceString,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Italic

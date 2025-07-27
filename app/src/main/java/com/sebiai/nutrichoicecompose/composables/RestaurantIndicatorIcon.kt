@@ -9,11 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.sebiai.nutrichoicecompose.R
@@ -22,7 +19,7 @@ import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 @Composable
 fun RestaurantIndicatorIcon(
     modifier: Modifier = Modifier,
-    shadowElevation: Dp = 0.dp
+    shadowElevation: Dp = 12.dp
 ) {
     Box(
         modifier = modifier
