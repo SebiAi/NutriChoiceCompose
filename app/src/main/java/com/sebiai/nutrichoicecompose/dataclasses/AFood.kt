@@ -8,6 +8,7 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import com.sebiai.nutrichoicecompose.R
 import java.io.Serializable
+import java.util.UUID
 
 abstract class AFood(
     val title: String,
@@ -27,6 +28,8 @@ abstract class AFood(
 
     open val searchString: String
         get() = title
+
+    val id: String = UUID.randomUUID().toString()
 
     val highProtein: Boolean get() = nutritionValues.protein >= 20
     val highCalories: Boolean get() = nutritionValues.calories >= 300
