@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
@@ -22,7 +23,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -34,8 +34,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sebiai.nutrichoicecompose.R
 import com.sebiai.nutrichoicecompose.composables.RestaurantIndicatorIcon
 import com.sebiai.nutrichoicecompose.composables.TitleAndMoneyRow
@@ -44,32 +42,18 @@ import com.sebiai.nutrichoicecompose.dataclasses.Ingredient
 import com.sebiai.nutrichoicecompose.dataclasses.Meal
 import com.sebiai.nutrichoicecompose.dataclasses.Mensa
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionValues
-import com.sebiai.nutrichoicecompose.screens.viewmodels.FoodDetailScreenUiState
-import com.sebiai.nutrichoicecompose.screens.viewmodels.FoodDetailScreenViewModel
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
 @Composable
 fun FoodDetailScreen(
-    modifier: Modifier = Modifier,
-    viewModel: FoodDetailScreenViewModel = viewModel()
-) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-    FoodDetailScreen(
-        uiState = uiState
-    )
-}
-
-@Composable
-fun FoodDetailScreen(
-    uiState: FoodDetailScreenUiState,
+    food: AFood,
     modifier: Modifier = Modifier
 ) {
-    val isRestaurantFood: Boolean = uiState.food is Meal
+    val isRestaurantFood: Boolean = food is Meal
 
     Column(
         modifier = modifier.verticalScroll(
-            uiState.scrollState
+            rememberScrollState()
         ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -83,7 +67,7 @@ fun FoodDetailScreen(
             Image(
                 modifier = Modifier.fillMaxWidth(),
                 alignment = Alignment.Center,
-                bitmap = uiState.food.getImage(LocalContext.current),
+                bitmap = food.getImage(LocalContext.current),
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
@@ -99,12 +83,12 @@ fun FoodDetailScreen(
             modifier = Modifier.padding(16.dp)
         ) {
             TitleAndMoneyRow(
-                title = uiState.food.title,
-                priceString = uiState.food.getPriceString(LocalContext.current),
+                title = food.title,
+                priceString = food.getPriceString(LocalContext.current),
                 fontScale = 1.7
             )
             if (isRestaurantFood) {
-                val meal: Meal = uiState.food
+                val meal: Meal = food
                 Text(
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(start = 24.dp),
@@ -116,7 +100,7 @@ fun FoodDetailScreen(
                 modifier = Modifier.height(8.dp)
             )
             NutritionTable(
-                nutritionValues = uiState.food.nutritionValues
+                nutritionValues = food.nutritionValues
             )
             Column(
                 modifier = Modifier.padding(8.dp, 8.dp)
@@ -127,13 +111,13 @@ fun FoodDetailScreen(
                 ) {
                     Image(
                         modifier = Modifier.height(80.dp).weight(1F),
-                        imageVector = uiState.food.getNutriScoreImage(LocalContext.current),
+                        imageVector = food.getNutriScoreImage(LocalContext.current),
                         contentScale = ContentScale.Fit,
                         contentDescription = stringResource(R.string.nutri_score_name)
                     )
                     Image(
                         modifier = Modifier.height(80.dp).weight(1F),
-                        imageVector = uiState.food.getGreenScoreImage(LocalContext.current),
+                        imageVector = food.getGreenScoreImage(LocalContext.current),
                         contentScale = ContentScale.Fit,
                         contentDescription = stringResource(R.string.green_score_name)
                     )
@@ -270,21 +254,17 @@ private fun NutritionTableElement(
 @Preview(showBackground = true)
 @Composable
 private fun FoodDetailScreenWithIngredientPreview() {
-    val uiState = FoodDetailScreenUiState(
-        food = Ingredient(
-            title = "Title",
-            imageResource = R.drawable.tomato_paste_image,
-            nutritionValues = NutritionValues(),
-            price = AFood.Price.MEDIUM,
-            nutriScore = AFood.Score.C,
-            greenScore = AFood.Score.C,
-            dietaryPreferences = AFood.DietaryPreferences.VEGAN
-        )
-    )
-
     NutriChoiceComposeTheme {
         FoodDetailScreen(
-            uiState = uiState,
+            food = Ingredient(
+                title = "Title",
+                imageResource = R.drawable.tomato_paste_image,
+                nutritionValues = NutritionValues(),
+                price = AFood.Price.MEDIUM,
+                nutriScore = AFood.Score.C,
+                greenScore = AFood.Score.C,
+                dietaryPreferences = AFood.DietaryPreferences.VEGAN
+            ),
             modifier = Modifier
                 .fillMaxSize()
         )
@@ -293,33 +273,29 @@ private fun FoodDetailScreenWithIngredientPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun FoodDetailScreenWithMealPreview() {
-    val uiState = FoodDetailScreenUiState(
-        food = Meal(
-            title = "Title",
-            imageResource = R.drawable.wiener_schnitzl_image,
-            nutritionValues = NutritionValues(),
-            price = AFood.Price.MEDIUM,
-            nutriScore = AFood.Score.C,
-            greenScore = AFood.Score.C,
-            dietaryPreferences = AFood.DietaryPreferences.VEGAN,
-            ingredients = listOf(
-                Ingredient(
-                    title = "Title",
-                    imageResource = R.drawable.tomato_paste_image,
-                    nutritionValues = NutritionValues(),
-                    price = AFood.Price.MEDIUM,
-                    nutriScore = AFood.Score.C,
-                    greenScore = AFood.Score.C,
-                    dietaryPreferences = AFood.DietaryPreferences.VEGAN
-                )
-            ),
-            restaurant = Mensa("Mensa Uni Wien")
-        )
-    )
-
     NutriChoiceComposeTheme {
         FoodDetailScreen(
-            uiState = uiState,
+            food = Meal(
+                title = "Title",
+                imageResource = R.drawable.wiener_schnitzl_image,
+                nutritionValues = NutritionValues(),
+                price = AFood.Price.MEDIUM,
+                nutriScore = AFood.Score.B,
+                greenScore = AFood.Score.D,
+                dietaryPreferences = AFood.DietaryPreferences.VEGAN,
+                ingredients = listOf(
+                    Ingredient(
+                        title = "Title",
+                        imageResource = R.drawable.tomato_paste_image,
+                        nutritionValues = NutritionValues(),
+                        price = AFood.Price.MEDIUM,
+                        nutriScore = AFood.Score.C,
+                        greenScore = AFood.Score.C,
+                        dietaryPreferences = AFood.DietaryPreferences.VEGAN
+                    )
+                ),
+                restaurant = Mensa("Mensa Uni Wien")
+            ),
             modifier = Modifier
                 .fillMaxSize()
         )
