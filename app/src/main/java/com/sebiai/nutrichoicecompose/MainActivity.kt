@@ -15,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.sebiai.nutrichoicecompose.composables.MyTopAppBar
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
@@ -35,7 +34,7 @@ class MainActivity : ComponentActivity() {
 fun MainActivityContent(modifier: Modifier = Modifier) {
     // Navigation
     val navController = rememberNavController()
-    val startDestination = Destination.GENERAL_SEARCH
+    val startDestination = GeneralSearchNavRoute
 
     // App bar state
     var appBarShowBackArrow by remember { mutableStateOf(false) }
@@ -44,8 +43,20 @@ fun MainActivityContent(modifier: Modifier = Modifier) {
 
     navController.addOnDestinationChangedListener { controller, destination, arguments ->
         appBarShowBackArrow = controller.previousBackStackEntry != null
-        appBarShowSettingsAction = destination.route == Destination.GENERAL_SEARCH.route
-        appBarTitle = controller.context.getString(Destination.valueOf(destination.route!!).titleStringRes)
+
+        destination.route?.let { route ->
+            // routes have the qualifiedName of the class plus a url like arguments
+            // when a data class is used
+            val routeQualifiedName = route.substringBefore('/')
+            val titleRes = when (routeQualifiedName) {
+                GeneralSearchNavRoute::class.qualifiedName!! -> R.string.app_name
+                SettingsNavRoute::class.qualifiedName!! -> R.string.settings_screen_title
+                else -> null
+            }
+            appBarTitle = titleRes?.let { controller.context.getString(it) }?:""
+
+            appBarShowSettingsAction = routeQualifiedName == GeneralSearchNavRoute::class.qualifiedName!!
+        }
     }
 
     NutriChoiceComposeTheme {
@@ -60,7 +71,7 @@ fun MainActivityContent(modifier: Modifier = Modifier) {
                         },
                         showSettingsAction = appBarShowSettingsAction,
                         onSettingsActionClick = {
-                            navController.navigate(route = Destination.SETTINGS.route)
+                            navController.navigate(route = SettingsNavRoute)
                         }
                     )
             }
@@ -68,7 +79,7 @@ fun MainActivityContent(modifier: Modifier = Modifier) {
             AppNavHost(
                 navController,
                 startDestination,
-                modifier = Modifier.padding(innerPadding).padding(12.dp)
+                modifier = Modifier.padding(innerPadding)
             )
         }
     }
