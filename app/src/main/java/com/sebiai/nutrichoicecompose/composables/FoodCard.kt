@@ -12,16 +12,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -96,7 +91,8 @@ private fun FoodCardBig(
                 )
                 if (isRestaurantFood) {
                     RestaurantIndicatorIcon(
-                        modifier = Modifier.offset((-12).dp, (12).dp)
+                        modifier = Modifier.offset((-12).dp, (12).dp),
+                        shadowElevation = 12.dp
                     )
                 }
             }
@@ -154,29 +150,6 @@ private fun FoodCardSmall(
                     modifier = Modifier.fillMaxWidth()
                 )
             }
-        }
-    }
-}
-
-@Composable
-private fun RestaurantIndicatorIcon(
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier
-    ) {
-        Surface(
-            modifier = Modifier
-                .size(35.dp)
-                .aspectRatio(1F),
-            shape = RoundedCornerShape(100),
-            color = MaterialTheme.colorScheme.tertiaryContainer,
-            shadowElevation = 12.dp
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.restaurant_indicator_icon),
-                contentDescription = null
-            )
         }
     }
 }
