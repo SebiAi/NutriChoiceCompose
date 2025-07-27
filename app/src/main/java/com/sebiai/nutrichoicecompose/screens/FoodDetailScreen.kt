@@ -103,7 +103,7 @@ fun FoodDetailScreen(
                 nutritionValues = food.nutritionValues
             )
             Column(
-                modifier = Modifier.padding(8.dp, 8.dp)
+                modifier = Modifier.padding(8.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
