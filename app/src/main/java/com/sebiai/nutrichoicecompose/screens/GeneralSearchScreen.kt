@@ -104,8 +104,10 @@ fun GeneralSearchScreen(
 @Composable
 private fun GeneralSearchScreenPreview() {
     NutriChoiceComposeTheme {
-        GeneralSearchScreen(modifier = Modifier
-            .fillMaxSize()
-            .padding(12.dp))
+        GeneralSearchScreen(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp)
+        )
     }
 }
