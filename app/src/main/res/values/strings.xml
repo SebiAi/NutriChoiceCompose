@@ -24,4 +24,17 @@
     <string name="high_carbs">High Carbs</string>
     <string name="high_protein">High Protein</string>
     <string name="cost_efficient">Cost Efficient</string>
+
+    <string name="nutrient_energy_unit">kcal</string>
+    <string name="nutrient_weight_unit">g</string>
+    <string name="nutrient_type_calories">Calories</string>
+    <string name="nutrient_type_protein">Protein</string>
+    <string name="nutrient_type_fat">Fat</string>
+    <string name="nutrient_type_carbs">Carbs</string>
+    <string name="nutrient_type_sugar">Sugar</string>
+    <string name="nutrient_type_salt">Salt</string>
+    <string name="per_100_unit">Per 100g</string>
+
+    <string name="nutri_score_name">NutriScore</string>
+    <string name="green_score_name">GreenScore</string>
 </resources>
