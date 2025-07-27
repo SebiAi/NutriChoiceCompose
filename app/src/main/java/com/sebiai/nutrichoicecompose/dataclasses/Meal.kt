@@ -16,4 +16,7 @@ class Meal(
 ): AFood(title, imageResource, nutritionValues, price, nutriScore, greenScore, dietaryPreferences) {
     override val searchString: String
         get() = super.searchString + "\n" + restaurant.name
+
+    val restaurantName: String
+        get() = restaurant.name
 }
