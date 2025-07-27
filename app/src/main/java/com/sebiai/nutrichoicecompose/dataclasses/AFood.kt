@@ -13,7 +13,7 @@ abstract class AFood(
     val title: String,
     @field:DrawableRes
     val imageResource: Int,
-    private val nutritionValues: NutritionValues,
+    val nutritionValues: NutritionValues,
     private val price: Price,
 
     val nutriScore: Score,
