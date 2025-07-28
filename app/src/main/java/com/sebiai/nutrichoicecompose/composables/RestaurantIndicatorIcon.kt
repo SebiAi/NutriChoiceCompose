@@ -26,7 +26,6 @@ fun RestaurantIndicatorIcon(
     ) {
         Surface(
             modifier = Modifier
-                .size(35.dp)
                 .aspectRatio(1F),
             shape = RoundedCornerShape(100),
             color = MaterialTheme.colorScheme.tertiaryContainer,

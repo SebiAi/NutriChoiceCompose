@@ -73,7 +73,9 @@ fun FoodDetailScreen(
             )
             if (isRestaurantFood) {
                 RestaurantIndicatorIcon(
-                    modifier = Modifier.offset((-12).dp, (12).dp)
+                    modifier = Modifier
+                        .size(48.dp)
+                        .offset((-12).dp, (12).dp)
                 )
             }
         }
