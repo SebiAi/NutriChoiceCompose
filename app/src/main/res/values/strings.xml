@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NutriChoiceCompose</string>
     <string name="welcome_greeting">Welcome to NutriChoice!</string>
+    <string name="ingredients_heading">Ingredients</string>
 
     <string name="settings_screen_title">Settings</string>
     <string name="food_detail_screen_title">Details</string>

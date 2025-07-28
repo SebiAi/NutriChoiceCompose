@@ -2,6 +2,7 @@ package com.sebiai.nutrichoicecompose.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,9 +15,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,18 +26,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sebiai.nutrichoicecompose.R
+import com.sebiai.nutrichoicecompose.composables.FoodCard
+import com.sebiai.nutrichoicecompose.composables.FoodCardType
 import com.sebiai.nutrichoicecompose.composables.RestaurantIndicatorIcon
 import com.sebiai.nutrichoicecompose.composables.TitleAndMoneyRow
+import com.sebiai.nutrichoicecompose.composables.determineCustomizableChips
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
 import com.sebiai.nutrichoicecompose.dataclasses.Ingredient
 import com.sebiai.nutrichoicecompose.dataclasses.Meal
@@ -44,6 +50,8 @@ import com.sebiai.nutrichoicecompose.dataclasses.Mensa
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionValues
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
+
+// TODO: Add shared element transition for image, restaurant indicator, title and money: https://developer.android.com/develop/ui/compose/animation/shared-elements
 
 @Composable
 fun FoodDetailScreen(
@@ -54,91 +62,125 @@ fun FoodDetailScreen(
 ) {
     val isRestaurantFood: Boolean = food is Meal
 
-    Column(
-        modifier = modifier.verticalScroll(
-            rememberScrollState()
-        ),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // Image Box
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp),
-            contentAlignment = Alignment.TopEnd
-        ) {
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                alignment = Alignment.Center,
-                bitmap = food.getImage(LocalContext.current),
-                contentDescription = null,
-                contentScale = ContentScale.Crop
+    LazyColumn {
+        // Image
+        item {
+            ImageContent(
+                image = food.getImage(LocalContext.current),
+                showRestaurantIndicatorIcon = isRestaurantFood
             )
-            if (isRestaurantFood) {
-                RestaurantIndicatorIcon(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .offset((-12).dp, (12).dp)
+        }
+        // Main content
+        item {
+            Column (
+                modifier = Modifier.padding(16.dp)
+            ) {
+                TitleAndMoneyRow(
+                    title = food.title,
+                    priceString = food.getPriceString(LocalContext.current),
+                    fontScale = 1.3
                 )
+                if (isRestaurantFood) {
+                    val meal: Meal = food
+                    Text(
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(start = 24.dp),
+                        text = meal.restaurantName,
+                        fontStyle = FontStyle.Italic
+                    )
+                }
+                Spacer(
+                    modifier = Modifier.height(12.dp)
+                )
+                NutritionTable(
+                    nutritionValues = food.nutritionValues
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Column(
+                    modifier = Modifier.padding(8.dp, 0.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Image(
+                            modifier = Modifier.height(80.dp).weight(1F),
+                            imageVector = food.getNutriScoreImage(LocalContext.current),
+                            contentScale = ContentScale.Fit,
+                            contentDescription = stringResource(R.string.nutri_score_name)
+                        )
+                        Image(
+                            modifier = Modifier.height(80.dp).weight(1F),
+                            imageVector = food.getGreenScoreImage(LocalContext.current),
+                            contentScale = ContentScale.Fit,
+                            contentDescription = stringResource(R.string.green_score_name)
+                        )
+                    }
+                }
             }
         }
 
-        // Bottom information
-        Column (
-            modifier = Modifier.padding(16.dp)
-        ) {
-            TitleAndMoneyRow(
-                title = food.title,
-                priceString = food.getPriceString(LocalContext.current),
-                fontScale = 1.3
-            )
-            if (isRestaurantFood) {
-                val meal: Meal = food
-                Text(
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(start = 24.dp),
-                    text = meal.restaurantName,
-                    fontStyle = FontStyle.Italic
-                )
-            }
-            Spacer(
-                modifier = Modifier.height(12.dp)
-            )
-            NutritionTable(
-                nutritionValues = food.nutritionValues
-            )
-            Column(
-                modifier = Modifier.padding(8.dp, 12.dp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+        // Content for meals (ingredients)
+        if (isRestaurantFood) {
+            val contentHorizontalPaddingModifier: Modifier = Modifier.padding(16.dp, 0.dp)
+            item {
+                Column(
+                    modifier = contentHorizontalPaddingModifier
                 ) {
-                    Image(
-                        modifier = Modifier.height(80.dp).weight(1F),
-                        imageVector = food.getNutriScoreImage(LocalContext.current),
-                        contentScale = ContentScale.Fit,
-                        contentDescription = stringResource(R.string.nutri_score_name)
+                    HorizontalDivider()
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        style = MaterialTheme.typography.titleLarge,
+                        text = stringResource(R.string.ingredients_heading),
+                        fontWeight = FontWeight.Bold
                     )
-                    Image(
-                        modifier = Modifier.height(80.dp).weight(1F),
-                        imageVector = food.getGreenScoreImage(LocalContext.current),
-                        contentScale = ContentScale.Fit,
-                        contentDescription = stringResource(R.string.green_score_name)
-                    )
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
-
-            if (isRestaurantFood) {
-                // Ingredients stuff
-                HorizontalDivider()
-
-                // TODO: [NOW] Implement rendering of ingredients
-                Text(
-                    style = MaterialTheme.typography.titleLarge,
-                    text = "Ingredients here"
+            items(food.ingredients) {
+                FoodCard(
+                    modifier = contentHorizontalPaddingModifier.clickable(
+                        onClick = { onFoodCardClicked(it, nutritionPreferences) }
+                    ),
+                    type = FoodCardType.SMALL,
+                    image = it.getImage(LocalContext.current),
+                    title = it.title,
+                    priceString = it.getPriceString(LocalContext.current),
+                    isRestaurantFood = it is Meal,
+                    customizableChips = determineCustomizableChips(LocalContext.current, it, nutritionPreferences)
                 )
+                Spacer(modifier = Modifier.height(12.dp))
             }
+        }
+    }
+}
+
+@Composable
+private fun ImageContent(
+    image: ImageBitmap,
+    showRestaurantIndicatorIcon: Boolean,
+
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp),
+        contentAlignment = Alignment.TopEnd
+    ) {
+        Image(
+            modifier = Modifier.fillMaxWidth(),
+            alignment = Alignment.Center,
+            bitmap = image,
+            contentDescription = null,
+            contentScale = ContentScale.Crop
+        )
+        if (showRestaurantIndicatorIcon) {
+            RestaurantIndicatorIcon(
+                modifier = Modifier
+                    .size(48.dp)
+                    .offset((-12).dp, (12).dp)
+            )
         }
     }
 }
