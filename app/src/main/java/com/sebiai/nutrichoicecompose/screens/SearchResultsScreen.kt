@@ -77,7 +77,10 @@ fun SearchResultsScreen(
             items(items = uiState.searchResults) {
                 FoodCard(
                     modifier = Modifier.clickable(
-                        onClick = { onFoodCardClicked(it, sharedUiState.nutritionPreferences) }
+                        onClick = {
+                            viewModel.addRecentlyViewedFood(it)
+                            onFoodCardClicked(it, sharedUiState.nutritionPreferences)
+                        }
                     ),
                     type = FoodCardType.BIG,
                     image = it.getImage(LocalContext.current),

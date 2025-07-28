@@ -29,7 +29,7 @@ data class SharedSearchFunctionUiState(
 )
 
 data class HomeScreenUiState(
-    val recentlyViewedFoods: List<AFood> = listOf(Data.search("schn", FilterState())[0]),
+    val recentlyViewedFoods: List<AFood> = listOf(),
 
     val recentlyViewedScrollState: LazyListState = LazyListState()
 )
