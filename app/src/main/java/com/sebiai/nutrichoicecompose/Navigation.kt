@@ -40,7 +40,7 @@ fun getTitleForCurrentRoute(context: Context, route: String): String {
     val titleRes = when (routeQualifiedName) {
         HomeNavRoute::class.qualifiedName!! -> R.string.app_name
         SettingsNavRoute::class.qualifiedName!! -> R.string.settings_screen_title
-        SearchResultsNavRoute::class.qualifiedName!! -> R.string.app_name
+        SearchResultsNavRoute::class.qualifiedName!! -> R.string.search_results_screen_title
         FoodDetailScreenNavRoute::class.qualifiedName!! -> R.string.food_detail_screen_title
         else -> null
     }

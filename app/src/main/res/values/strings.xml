@@ -18,6 +18,7 @@
     <string name="content_description_top_app_bar_settings_icon">Settings</string>
 
     <!-- Screen titles -->
+    <string name="search_results_screen_title">Search Results</string>
     <string name="settings_screen_title">Settings</string>
     <string name="food_detail_screen_title">Details</string>
 
