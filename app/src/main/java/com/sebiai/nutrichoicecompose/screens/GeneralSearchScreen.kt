@@ -33,13 +33,14 @@ import com.sebiai.nutrichoicecompose.composables.FoodCardType
 import com.sebiai.nutrichoicecompose.composables.determineCustomizableChips
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
 import com.sebiai.nutrichoicecompose.dataclasses.Meal
+import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import com.sebiai.nutrichoicecompose.screens.viewmodels.GeneralSearchScreenViewModel
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GeneralSearchScreen(
-    onFoodCardClicked: (AFood) -> Unit,
+    onFoodCardClicked: (AFood, NutritionPreferences) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: GeneralSearchScreenViewModel = viewModel()
 ) {
@@ -92,7 +93,7 @@ fun GeneralSearchScreen(
             items(items = uiState.searchResults) {
                 FoodCard(
                     modifier = Modifier.clickable(
-                        onClick = { onFoodCardClicked(it) }
+                        onClick = { onFoodCardClicked(it, uiState.nutritionPreferences) }
                     ),
                     type = FoodCardType.BIG,
                     image = it.getImage(LocalContext.current),
@@ -114,7 +115,7 @@ private fun GeneralSearchScreenPreview() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(12.dp),
-            onFoodCardClicked = {}
+            onFoodCardClicked = {food, nutritionPreferences -> }
         )
     }
 }

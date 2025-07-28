@@ -1,7 +1,11 @@
 package com.sebiai.nutrichoicecompose.dataclasses
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
+@Serializable
+@Parcelize
 data class NutritionPreferences(
     val protein: Boolean,
     val carbs: Boolean,
@@ -11,7 +15,7 @@ data class NutritionPreferences(
     val healthy: Boolean,
     val vegan: Boolean,
     val vegetarian: Boolean
-) : Serializable {
+) : Parcelable {
     constructor() : this(
         false, false, false,
         false, false, false,

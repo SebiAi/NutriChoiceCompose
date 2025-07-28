@@ -41,12 +41,15 @@ import com.sebiai.nutrichoicecompose.dataclasses.AFood
 import com.sebiai.nutrichoicecompose.dataclasses.Ingredient
 import com.sebiai.nutrichoicecompose.dataclasses.Meal
 import com.sebiai.nutrichoicecompose.dataclasses.Mensa
+import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionValues
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
 @Composable
 fun FoodDetailScreen(
     food: AFood,
+    onFoodCardClicked: (AFood, NutritionPreferences) -> Unit,
+    nutritionPreferences: NutritionPreferences,
     modifier: Modifier = Modifier
 ) {
     val isRestaurantFood: Boolean = food is Meal
@@ -267,6 +270,8 @@ private fun FoodDetailScreenWithIngredientPreview() {
                 greenScore = AFood.Score.C,
                 dietaryPreferences = AFood.DietaryPreferences.VEGAN
             ),
+            onFoodCardClicked = {food, nutritionPreferences -> },
+            nutritionPreferences = NutritionPreferences(true, true, true, true, true, true, true, true),
             modifier = Modifier
                 .fillMaxSize()
         )
@@ -298,6 +303,8 @@ private fun FoodDetailScreenWithMealPreview() {
                 ),
                 restaurant = Mensa("Mensa Uni Wien")
             ),
+            onFoodCardClicked = {food, nutritionPreferences -> },
+            nutritionPreferences = NutritionPreferences(true, true, true, true, true, true, true, true),
             modifier = Modifier
                 .fillMaxSize()
         )
