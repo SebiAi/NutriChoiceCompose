@@ -178,7 +178,7 @@ private fun ImageContent(
         if (showRestaurantIndicatorIcon) {
             RestaurantIndicatorIcon(
                 modifier = Modifier
-                    .size(48.dp)
+                    .size(46.dp)
                     .offset((-12).dp, (12).dp)
             )
         }

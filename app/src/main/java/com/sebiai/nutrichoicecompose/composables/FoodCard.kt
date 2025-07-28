@@ -93,7 +93,7 @@ private fun FoodCardBig(
                 if (isRestaurantFood) {
                     RestaurantIndicatorIcon(
                         modifier = Modifier
-                            .size(48.dp)
+                            .size(46.dp)
                             .offset((-12).dp, (12).dp)
                     )
                 }
