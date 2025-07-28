@@ -31,12 +31,16 @@
     <string name="price_placeholder_symbol">•</string>
 
     <!-- NutritionPreferences -->
+    <string name="preferences_selection_heading">Select your preferences</string>
+    <string name="preferences_selection_subtitle">Select up to three that are most important to you:</string>
+    <string name="preferences_validation_error">Please select 3 or less!</string>
     <string name="preferences_chip_protein">Protein</string>
     <string name="preferences_chip_carbs">Carbs</string>
     <string name="preferences_chip_fats">Fats</string>
     <string name="preferences_chip_calories">Calories</string>
     <string name="preferences_chip_eco_friendly">Eco Friendly</string>
     <string name="preferences_chip_healthy">Healthy</string>
+    <string name="preferences_settings_hint">You can change them anytime in the settings.</string>
     <string name="preferences_dietary_header">Select dietary needs:</string>
     <string name="preferences_chip_vegetarian">Vegetarian</string>
     <string name="preferences_chip_vegan">Vegan</string>
