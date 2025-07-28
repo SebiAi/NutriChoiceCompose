@@ -9,6 +9,8 @@
     <string name="ingredients_heading">Ingredients</string>
     <string name="nutri_score_name">NutriScore</string>
     <string name="green_score_name">GreenScore</string>
+    <string name="no_recently_viewed_heading">Nothing here yet</string>
+    <string name="no_recently_viewed_subtitle">You will find your recently viewed foods here.</string>
 
     <!-- Content description stuff -->
     <string name="content_description_filter_button_icon">Filter</string>
@@ -22,6 +24,7 @@
     <string name="settings_screen_title">Settings</string>
     <string name="food_detail_screen_title">Details</string>
 
+    <!-- Price string construction -->
     <string name="price_symbol">$</string>
     <string name="price_placeholder_symbol">•</string>
 
