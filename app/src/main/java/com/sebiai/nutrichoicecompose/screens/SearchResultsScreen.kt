@@ -16,12 +16,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -39,41 +37,23 @@ import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(
+fun SearchResultsScreen(
     onFoodCardClicked: (AFood, NutritionPreferences) -> Unit,
-    afterSearchPerformed: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeAndSearchResultsScreenViewModel = viewModel()
 ) {
-    val uiState by viewModel.homeScreenUiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.searchAndResultsScreenUiState.collectAsStateWithLifecycle()
     val sharedUiState by viewModel.sharedSearchFunctionUiState.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
-        Text(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = stringResource(R.string.welcome_greeting),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(
-            modifier = Modifier.height(10.dp)
-        )
-        Text(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = stringResource(R.string.welcome_search_instructions),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyLarge
-        )
         FilterSearchBar(
-            modifier = Modifier.padding(0.dp, 12.dp),
             query = sharedUiState.searchQuery,
             onSearch = { query: String ->
                 Log.d(null, "Searched with query \"$query\"")
                 viewModel.performSearch(query, sharedUiState.filterState)
-                afterSearchPerformed()
+                uiState.resultScrollState.requestScrollToItem(0)
             },
             onQueryChanged = viewModel::updateSearchQuery,
             onClearQuery = { viewModel.updateSearchQuery("") },
@@ -81,8 +61,10 @@ fun HomeScreen(
             hint = stringResource(R.string.search_bar_hint)
         )
 
+        Spacer(modifier = Modifier.height(12.dp))
+
         Text(
-            text = stringResource(R.string.recently_viewed_heading),
+            text = stringResource(R.string.search_results_count_heading, uiState.searchResults.size),
             style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.Bold
         )
@@ -90,9 +72,9 @@ fun HomeScreen(
         LazyColumn (
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
-            state = uiState.recentlyViewedScrollState
+            state = uiState.resultScrollState
         ) {
-            items(items = uiState.recentlyViewedFoods) {
+            items(items = uiState.searchResults) {
                 FoodCard(
                     modifier = Modifier.clickable(
                         onClick = { onFoodCardClicked(it, sharedUiState.nutritionPreferences) }
@@ -111,14 +93,13 @@ fun HomeScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenPreview() {
+private fun SearchResultsScreenPreview() {
     NutriChoiceComposeTheme {
-        HomeScreen(
+        SearchResultsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(12.dp),
-            onFoodCardClicked = {food, nutritionPreferences -> },
-            afterSearchPerformed = {}
+            onFoodCardClicked = {food, nutritionPreferences -> }
         )
     }
 }

@@ -5,6 +5,7 @@
     <string name="welcome_search_instructions">Start searching for ingredients, meals or restaurants.</string>
     <string name="search_bar_hint">Start searching</string>
     <string name="recently_viewed_heading">Recently Viewed</string>
+    <string name="search_results_count_heading">%d Results</string>
     <string name="ingredients_heading">Ingredients</string>
     <string name="nutri_score_name">NutriScore</string>
     <string name="green_score_name">GreenScore</string>
