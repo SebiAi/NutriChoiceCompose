@@ -11,6 +11,8 @@
     <string name="green_score_name">GreenScore</string>
     <string name="no_recently_viewed_heading">Nothing here yet</string>
     <string name="no_recently_viewed_subtitle">You will find your recently viewed foods here.</string>
+    <string name="no_search_results_heading">No results</string>
+    <string name="no_search_results_subtitle">Try searching for something different or using a less restrictive filter.</string>
 
     <!-- Content description stuff -->
     <string name="content_description_filter_button_icon">Filter</string>
