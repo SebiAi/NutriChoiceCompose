@@ -1,14 +1,29 @@
 <resources>
+    <!-- General -->
     <string name="app_name">NutriChoiceCompose</string>
     <string name="welcome_greeting">Welcome to NutriChoice!</string>
+    <string name="welcome_search_instructions">Start searching for ingredients, meals or restaurants.</string>
+    <string name="search_bar_hint">Start searching</string>
+    <string name="recently_viewed_heading">Recently Viewed</string>
     <string name="ingredients_heading">Ingredients</string>
+    <string name="nutri_score_name">NutriScore</string>
+    <string name="green_score_name">GreenScore</string>
 
+    <!-- Content description stuff -->
+    <string name="content_description_filter_button_icon">Filter</string>
+    <string name="content_description_search_bar_search_icon">Search</string>
+    <string name="content_description_search_bar_clear_query_icon">Clear search query</string>
+    <string name="content_description_top_app_bar_back_arrow_icon">Navigate up</string>
+    <string name="content_description_top_app_bar_settings_icon">Settings</string>
+
+    <!-- Screen titles -->
     <string name="settings_screen_title">Settings</string>
     <string name="food_detail_screen_title">Details</string>
 
     <string name="price_symbol">$</string>
     <string name="price_placeholder_symbol">•</string>
 
+    <!-- NutritionPreferences -->
     <string name="preferences_chip_protein">Protein</string>
     <string name="preferences_chip_carbs">Carbs</string>
     <string name="preferences_chip_fats">Fats</string>
@@ -19,6 +34,7 @@
     <string name="preferences_chip_vegetarian">Vegetarian</string>
     <string name="preferences_chip_vegan">Vegan</string>
 
+    <!-- Screen titles -->
     <string name="low_calories">Low Calories</string>
     <string name="high_calories">High Calories</string>
     <string name="low_fat">Low Fat</string>
@@ -27,6 +43,7 @@
     <string name="high_protein">High Protein</string>
     <string name="cost_efficient">Cost Efficient</string>
 
+    <!-- Nutrition types and units -->
     <string name="nutrient_energy_unit">kcal</string>
     <string name="nutrient_weight_unit">g</string>
     <string name="nutrient_type_calories">Calories</string>
@@ -37,6 +54,4 @@
     <string name="nutrient_type_salt">Salt</string>
     <string name="per_100_unit">Per 100g</string>
 
-    <string name="nutri_score_name">NutriScore</string>
-    <string name="green_score_name">GreenScore</string>
 </resources>

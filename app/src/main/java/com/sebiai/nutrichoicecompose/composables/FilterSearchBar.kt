@@ -31,11 +31,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.sebiai.nutrichoicecompose.R
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
 @Composable
@@ -72,7 +74,7 @@ fun FilterSearchBar(
         ) {
             Icon(
                 imageVector = Icons.Outlined.FilterAlt,
-                contentDescription = "Filter"
+                contentDescription = stringResource(R.string.content_description_filter_button_icon)
             )
         }
     }
@@ -128,7 +130,7 @@ private fun SearchBarImplementation(
                             ) {
                                 Icon(
                                     imageVector = Icons.Outlined.Search,
-                                    contentDescription = "Search"
+                                    contentDescription = stringResource(R.string.content_description_search_bar_search_icon)
                                 )
                             }
                         },
@@ -140,7 +142,7 @@ private fun SearchBarImplementation(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Outlined.Close,
-                                        contentDescription = "Clear Query"
+                                        contentDescription = stringResource(R.string.content_description_search_bar_clear_query_icon)
                                     )
                                 }
                             }

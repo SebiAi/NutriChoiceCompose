@@ -11,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.sebiai.nutrichoicecompose.R
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +44,7 @@ fun MyTopAppBar(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                        contentDescription = "Back Arrow"
+                        contentDescription = stringResource(R.string.content_description_top_app_bar_back_arrow_icon)
                     )
                 }
             }
@@ -54,7 +56,7 @@ fun MyTopAppBar(
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Settings,
-                        contentDescription = "Settings"
+                        contentDescription = stringResource(R.string.content_description_top_app_bar_settings_icon)
                     )
                 }
             }

@@ -61,7 +61,7 @@ fun HomeScreen(
         )
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = "Start searching for ingredients, meals or restaurants.",
+            text = stringResource(R.string.welcome_search_instructions),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyLarge
         )
@@ -76,11 +76,11 @@ fun HomeScreen(
             onQueryChanged = viewModel::updateQuery,
             onClearQuery = { viewModel.updateQuery("") },
             onFilterClicked = {},
-            hint = "Start searching"
+            hint = stringResource(R.string.search_bar_hint)
         )
 
         Text(
-            text = "Recently Viewed",
+            text = stringResource(R.string.recently_viewed_heading),
             style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.Bold
         )
