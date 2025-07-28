@@ -26,6 +26,19 @@ data class FoodDetailScreenNavRoute(
     val nutritionPreferences: NutritionPreferences
 )
 
+fun getTitleForCurrentRoute(context: Context, route: String): String {
+    // routes have the qualifiedName of the class plus a url like arguments
+    // when a data class is used
+    val routeQualifiedName = route.substringBefore('/')
+    val titleRes = when (routeQualifiedName) {
+        HomeNavRoute::class.qualifiedName!! -> R.string.app_name
+        SettingsNavRoute::class.qualifiedName!! -> R.string.settings_screen_title
+        FoodDetailScreenNavRoute::class.qualifiedName!! -> R.string.food_detail_screen_title
+        else -> null
+    }
+    return titleRes?.let { context.getString(titleRes) }?: ""
+}
+
 @Composable
 fun AppNavHost(
     navController: NavHostController,

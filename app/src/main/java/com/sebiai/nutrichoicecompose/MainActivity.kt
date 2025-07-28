@@ -48,13 +48,7 @@ fun MainActivityContent(modifier: Modifier = Modifier) {
             // routes have the qualifiedName of the class plus a url like arguments
             // when a data class is used
             val routeQualifiedName = route.substringBefore('/')
-            val titleRes = when (routeQualifiedName) {
-                HomeNavRoute::class.qualifiedName!! -> R.string.app_name
-                SettingsNavRoute::class.qualifiedName!! -> R.string.settings_screen_title
-                FoodDetailScreenNavRoute::class.qualifiedName!! -> R.string.food_detail_screen_title
-                else -> null
-            }
-            appBarTitle = titleRes?.let { controller.context.getString(it) }?:""
+            appBarTitle = getTitleForCurrentRoute(controller.context, route)
 
             appBarShowSettingsAction = routeQualifiedName == HomeNavRoute::class.qualifiedName!!
         }
