@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
 fun MainActivityContent(modifier: Modifier = Modifier) {
     // Navigation
     val navController = rememberNavController()
-    val startDestination = GeneralSearchNavRoute
+    val startDestination = HomeNavRoute
 
     // App bar state
     var appBarShowBackArrow by remember { mutableStateOf(false) }
@@ -49,14 +49,14 @@ fun MainActivityContent(modifier: Modifier = Modifier) {
             // when a data class is used
             val routeQualifiedName = route.substringBefore('/')
             val titleRes = when (routeQualifiedName) {
-                GeneralSearchNavRoute::class.qualifiedName!! -> R.string.app_name
+                HomeNavRoute::class.qualifiedName!! -> R.string.app_name
                 SettingsNavRoute::class.qualifiedName!! -> R.string.settings_screen_title
                 FoodDetailScreenNavRoute::class.qualifiedName!! -> R.string.food_detail_screen_title
                 else -> null
             }
             appBarTitle = titleRes?.let { controller.context.getString(it) }?:""
 
-            appBarShowSettingsAction = routeQualifiedName == GeneralSearchNavRoute::class.qualifiedName!!
+            appBarShowSettingsAction = routeQualifiedName == HomeNavRoute::class.qualifiedName!!
         }
     }
 

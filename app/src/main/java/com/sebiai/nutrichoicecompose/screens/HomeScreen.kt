@@ -34,15 +34,15 @@ import com.sebiai.nutrichoicecompose.composables.determineCustomizableChips
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
 import com.sebiai.nutrichoicecompose.dataclasses.Meal
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
-import com.sebiai.nutrichoicecompose.screens.viewmodels.GeneralSearchScreenViewModel
+import com.sebiai.nutrichoicecompose.screens.viewmodels.HomeScreenViewModel
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GeneralSearchScreen(
+fun HomeScreen(
     onFoodCardClicked: (AFood, NutritionPreferences) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: GeneralSearchScreenViewModel = viewModel()
+    viewModel: HomeScreenViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -109,9 +109,9 @@ fun GeneralSearchScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun GeneralSearchScreenPreview() {
+private fun HomeScreenPreview() {
     NutriChoiceComposeTheme {
-        GeneralSearchScreen(
+        HomeScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(12.dp),

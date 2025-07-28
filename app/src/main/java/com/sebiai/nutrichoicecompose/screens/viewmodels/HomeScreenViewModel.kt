@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.update
 
 // TODO: [NOW] Use Saved State module for ViewModel to keep the data when a system-initiated process death occurs: https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-savedstate
 
-data class GeneralSearchScreenUiState(
+data class HomeScreenUiState(
     val searchQuery: String = "",
     val searchResults: List<AFood> = listOf(Data.search("schn", FilterState())[0]),
     val filterState: FilterState = FilterState(),
@@ -22,12 +22,12 @@ data class GeneralSearchScreenUiState(
     val resultScrollState: LazyListState = LazyListState()
 )
 
-class GeneralSearchScreenViewModel : ViewModel() {
+class HomeScreenViewModel : ViewModel() {
     /*
      * Screen UI state
      */
-    private val _uiState = MutableStateFlow(GeneralSearchScreenUiState())
-    val uiState: StateFlow<GeneralSearchScreenUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(HomeScreenUiState())
+    val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
 
     /*
      * Business logic

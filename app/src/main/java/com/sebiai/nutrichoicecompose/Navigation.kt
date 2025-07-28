@@ -11,13 +11,13 @@ import androidx.navigation.toRoute
 import com.sebiai.nutrichoicecompose.dataclasses.Data
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import com.sebiai.nutrichoicecompose.screens.FoodDetailScreen
-import com.sebiai.nutrichoicecompose.screens.GeneralSearchScreen
+import com.sebiai.nutrichoicecompose.screens.HomeScreen
 import com.sebiai.nutrichoicecompose.screens.SettingsScreen
 import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf
 
 @Serializable
-object GeneralSearchNavRoute
+object HomeNavRoute
 @Serializable
 object SettingsNavRoute
 @Serializable
@@ -37,8 +37,8 @@ fun AppNavHost(
         startDestination = startDestination,
         modifier
     ) {
-        composable<GeneralSearchNavRoute> {
-            GeneralSearchScreen(
+        composable<HomeNavRoute> {
+            HomeScreen(
                 modifier = Modifier.padding(12.dp),
                 onFoodCardClicked = { food, nutritionPreferences -> navController.navigate(FoodDetailScreenNavRoute(food.id, nutritionPreferences)) }
             )
