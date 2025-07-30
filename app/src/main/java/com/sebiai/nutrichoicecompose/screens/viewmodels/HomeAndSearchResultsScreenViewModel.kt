@@ -56,7 +56,7 @@ class HomeAndSearchResultsScreenViewModel : ViewModel() {
     fun addRecentlyViewedFood(food: AFood) {
         _homeScreenUiState.update { currentState ->
             currentState.copy(
-                recentlyViewedFoods = currentState.recentlyViewedFoods + food
+                recentlyViewedFoods = listOf(food) + currentState.recentlyViewedFoods
             )
         }
     }
