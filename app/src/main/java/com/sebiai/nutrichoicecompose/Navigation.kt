@@ -1,6 +1,7 @@
 package com.sebiai.nutrichoicecompose
 
 import android.content.Context
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,7 +29,9 @@ object HomeNavRoute
 @Serializable
 object SearchResultsNavRoute
 @Serializable
-object SettingsNavRoute
+data class SettingsNavRoute(
+    val nutritionPreferences: NutritionPreferences
+)
 @Serializable
 data class FoodDetailScreenNavRoute(
     val foodId: String,
@@ -74,6 +77,25 @@ fun AppNavHost(
                 onFoodCardClicked = onFoodCardClicked,
                 afterSearchPerformed = { navController.navigate(SearchResultsNavRoute) },
                 nutritionPreferences = appState.nutritionPreferences
+            )
+        }
+        composable<SettingsNavRoute>(
+            typeMap = mapOf(
+                typeOf<NutritionPreferences>() to CustomParcelableNavType(
+                    NutritionPreferences::class.java,
+                    NutritionPreferences.serializer()
+                )
+            )
+        ) { backStackEntry ->
+            val navRouteObject: SettingsNavRoute = backStackEntry.toRoute()
+
+            SettingsScreen(
+                modifier = Modifier.padding(12.dp).fillMaxSize(),
+                initialNutritionPreferences = navRouteObject.nutritionPreferences,
+                onSavePreferences = { nutritionPreferences ->
+                    appViewModel.updateNutritionPreferences(nutritionPreferences)
+                    navController.popBackStack() // Navigate back to HomeScreen
+                }
             )
         }
         composable<SearchResultsNavRoute> {
