@@ -27,7 +27,8 @@ import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
 enum class Preference {
-    PROTEIN, CARBS, FATS, CALORIES, ECO_FRIENDLY, HEALTHY
+    PROTEIN, CARBS, FATS, CALORIES, ECO_FRIENDLY, HEALTHY,
+    VEGETARIAN, VEGAN
 }
 
 @Composable
@@ -178,7 +179,7 @@ fun NutritionPreferenceSelection(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     FilterChip(
-                        onClick = {},
+                        onClick = { onPreferenceClicked(Preference.VEGETARIAN, !nutritionPreferences.vegetarian) },
                         label = {
                             Text(
                                 style = MaterialTheme.typography.titleLarge,
@@ -193,7 +194,7 @@ fun NutritionPreferenceSelection(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     FilterChip(
-                        onClick = {},
+                        onClick = { onPreferenceClicked(Preference.VEGAN, !nutritionPreferences.vegan) },
                         label = {
                             Text(
                                 style = MaterialTheme.typography.titleLarge,
