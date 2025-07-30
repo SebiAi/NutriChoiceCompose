@@ -12,14 +12,11 @@ data class NutritionPreferences(
     val fat: Boolean,
     val calories: Boolean,
     val ecoFriendly: Boolean,
-    val healthy: Boolean,
-    val vegan: Boolean,
-    val vegetarian: Boolean
+    val healthy: Boolean
 ) : Parcelable {
     constructor() : this(
         false, false, false,
-        false, false, false,
-        false, false
+        false, false, false
     )
 
     fun countTrueBooleans(): Int {
@@ -29,9 +26,7 @@ data class NutritionPreferences(
             fat,
             calories,
             ecoFriendly,
-            healthy,
-            vegan,
-            vegetarian
+            healthy
         ).count { it }
     }
 }

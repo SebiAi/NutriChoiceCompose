@@ -26,9 +26,8 @@ import com.sebiai.nutrichoicecompose.R
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
-enum class Preference {
-    PROTEIN, CARBS, FATS, CALORIES, ECO_FRIENDLY, HEALTHY,
-    VEGETARIAN, VEGAN
+enum class NutritionPreference {
+    PROTEIN, CARBS, FATS, CALORIES, ECO_FRIENDLY, HEALTHY
 }
 
 @Composable
@@ -36,7 +35,7 @@ fun NutritionPreferenceSelection(
     modifier: Modifier = Modifier,
 
     nutritionPreferences: NutritionPreferences,
-    onPreferenceClicked: (toggledPreference: Preference, newState: Boolean) -> Unit,
+    onPreferenceClicked: (toggledPreference: NutritionPreference, newState: Boolean) -> Unit,
 
     validationErrorText: String,
     validationError: Boolean,
@@ -84,7 +83,7 @@ fun NutritionPreferenceSelection(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         FilterChip(
-                            onClick = { onPreferenceClicked(Preference.PROTEIN, !nutritionPreferences.protein) },
+                            onClick = { onPreferenceClicked(NutritionPreference.PROTEIN, !nutritionPreferences.protein) },
                             label = {
                                 Text(
                                     style = MaterialTheme.typography.titleLarge,
@@ -94,7 +93,7 @@ fun NutritionPreferenceSelection(
                             selected = nutritionPreferences.protein
                         )
                         FilterChip(
-                            onClick = { onPreferenceClicked(Preference.FATS, !nutritionPreferences.fat) },
+                            onClick = { onPreferenceClicked(NutritionPreference.FATS, !nutritionPreferences.fat) },
                             label = {
                                 Text(
                                     style = MaterialTheme.typography.titleLarge,
@@ -104,7 +103,7 @@ fun NutritionPreferenceSelection(
                             selected = nutritionPreferences.fat
                         )
                         FilterChip(
-                            onClick = { onPreferenceClicked(Preference.ECO_FRIENDLY, !nutritionPreferences.ecoFriendly) },
+                            onClick = { onPreferenceClicked(NutritionPreference.ECO_FRIENDLY, !nutritionPreferences.ecoFriendly) },
                             label = {
                                 Text(
                                     style = MaterialTheme.typography.titleLarge,
@@ -120,7 +119,7 @@ fun NutritionPreferenceSelection(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         FilterChip(
-                            onClick = { onPreferenceClicked(Preference.CARBS, !nutritionPreferences.carbs) },
+                            onClick = { onPreferenceClicked(NutritionPreference.CARBS, !nutritionPreferences.carbs) },
                             label = {
                                 Text(
                                     style = MaterialTheme.typography.titleLarge,
@@ -130,7 +129,7 @@ fun NutritionPreferenceSelection(
                             selected = nutritionPreferences.carbs
                         )
                         FilterChip(
-                            onClick = { onPreferenceClicked(Preference.CALORIES, !nutritionPreferences.calories) },
+                            onClick = { onPreferenceClicked(NutritionPreference.CALORIES, !nutritionPreferences.calories) },
                             label = {
                                 Text(
                                     style = MaterialTheme.typography.titleLarge,
@@ -140,7 +139,7 @@ fun NutritionPreferenceSelection(
                             selected = nutritionPreferences.calories
                         )
                         FilterChip(
-                            onClick = { onPreferenceClicked(Preference.HEALTHY, !nutritionPreferences.healthy) },
+                            onClick = { onPreferenceClicked(NutritionPreference.HEALTHY, !nutritionPreferences.healthy) },
                             label = {
                                 Text(
                                     style = MaterialTheme.typography.titleLarge,
@@ -161,52 +160,6 @@ fun NutritionPreferenceSelection(
                 )
             }
         }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                style = MaterialTheme.typography.titleLarge,
-                text = stringResource(R.string.preferences_dietary_header),
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                modifier = Modifier.padding(16.dp, 0.dp),
-            ) {
-                Column(
-                    modifier = Modifier.weight(1F),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    FilterChip(
-                        onClick = { onPreferenceClicked(Preference.VEGETARIAN, !nutritionPreferences.vegetarian) },
-                        label = {
-                            Text(
-                                style = MaterialTheme.typography.titleLarge,
-                                text = stringResource(R.string.preferences_chip_vegetarian)
-                            )
-                        },
-                        selected = nutritionPreferences.vegetarian
-                    )
-                }
-                Column(
-                    modifier = Modifier.weight(1F),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    FilterChip(
-                        onClick = { onPreferenceClicked(Preference.VEGAN, !nutritionPreferences.vegan) },
-                        label = {
-                            Text(
-                                style = MaterialTheme.typography.titleLarge,
-                                text = stringResource(R.string.preferences_chip_vegan)
-                            )
-                        },
-                        selected = nutritionPreferences.vegan
-                    )
-                }
-            }
-        }
     }
 }
 
@@ -223,9 +176,7 @@ private fun NutritionPreferenceSelectionValidPreview() {
                 fat = true,
                 calories = true,
                 ecoFriendly = false,
-                healthy = false,
-                vegan = true,
-                vegetarian = false
+                healthy = false
             ),
             onPreferenceClicked = {_, _ -> },
 

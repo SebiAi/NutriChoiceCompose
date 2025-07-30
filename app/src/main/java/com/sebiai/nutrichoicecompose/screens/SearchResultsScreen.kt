@@ -24,6 +24,7 @@ import com.sebiai.nutrichoicecompose.composables.FoodCardType
 import com.sebiai.nutrichoicecompose.composables.SearchAndListComponent
 import com.sebiai.nutrichoicecompose.composables.determineCustomizableChips
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
+import com.sebiai.nutrichoicecompose.dataclasses.FilterPreferences
 import com.sebiai.nutrichoicecompose.dataclasses.Meal
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import com.sebiai.nutrichoicecompose.screens.viewmodels.HomeAndSearchResultsScreenViewModel
@@ -36,7 +37,8 @@ fun SearchResultsScreen(
     viewModel: HomeAndSearchResultsScreenViewModel = viewModel(),
 
     onFoodCardClicked: (AFood) -> Unit,
-    nutritionPreferences: NutritionPreferences
+    nutritionPreferences: NutritionPreferences,
+    filterPreferences: FilterPreferences
 ) {
     val uiState by viewModel.searchAndResultsScreenUiState.collectAsStateWithLifecycle()
     val sharedUiState by viewModel.sharedSearchFunctionUiState.collectAsStateWithLifecycle()
@@ -104,10 +106,9 @@ private fun SearchResultsScreenPreview() {
                 true,
                 true,
                 true,
-                true,
-                true,
                 true
-            )
+            ),
+            filterPreferences = FilterPreferences()
         )
     }
 }

@@ -74,7 +74,12 @@ fun MainActivityContent(
                         },
                         showSettingsAction = appBarShowSettingsAction,
                         onSettingsActionClick = {
-                            navController.navigate(SettingsNavRoute(appState.nutritionPreferences))
+                            navController.navigate(
+                                SettingsNavRoute(
+                                    appState.nutritionPreferences,
+                                    appState.filterPreferences
+                                )
+                            )
                         }
                     )
             },

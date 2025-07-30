@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
 import com.sebiai.nutrichoicecompose.dataclasses.Data
+import com.sebiai.nutrichoicecompose.dataclasses.FilterPreferences
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import com.sebiai.nutrichoicecompose.screens.FoodDetailScreen
 import com.sebiai.nutrichoicecompose.screens.HomeScreen
@@ -30,7 +31,8 @@ object HomeNavRoute
 object SearchResultsNavRoute
 @Serializable
 data class SettingsNavRoute(
-    val nutritionPreferences: NutritionPreferences
+    val nutritionPreferences: NutritionPreferences,
+    val filterPreferences: FilterPreferences
 )
 @Serializable
 data class FoodDetailScreenNavRoute(
@@ -76,7 +78,8 @@ fun AppNavHost(
 
                 onFoodCardClicked = onFoodCardClicked,
                 afterSearchPerformed = { navController.navigate(SearchResultsNavRoute) },
-                nutritionPreferences = appState.nutritionPreferences
+                nutritionPreferences = appState.nutritionPreferences,
+                filterPreferences = appState.filterPreferences
             )
         }
         composable<SettingsNavRoute>(
@@ -84,6 +87,10 @@ fun AppNavHost(
                 typeOf<NutritionPreferences>() to CustomParcelableNavType(
                     NutritionPreferences::class.java,
                     NutritionPreferences.serializer()
+                ),
+                typeOf<FilterPreferences>() to CustomParcelableNavType(
+                    FilterPreferences::class.java,
+                    FilterPreferences.serializer()
                 )
             )
         ) { backStackEntry ->
@@ -92,8 +99,11 @@ fun AppNavHost(
             SettingsScreen(
                 modifier = Modifier.padding(12.dp).fillMaxSize(),
                 initialNutritionPreferences = navRouteObject.nutritionPreferences,
-                onSavePreferences = { nutritionPreferences ->
+                initialFilterPreferences = navRouteObject.filterPreferences,
+                onSavePreferences = { nutritionPreferences, filterPreferences ->
                     appViewModel.updateNutritionPreferences(nutritionPreferences)
+                    appViewModel.updateFilterPreferences(filterPreferences)
+
                     navController.popBackStack() // Navigate back to HomeScreen
                     appViewModel.showSnackbar(navController.context.getString(R.string.preferences_saved))
                 }
@@ -105,7 +115,8 @@ fun AppNavHost(
                 viewModel = sharedHomeAndSearchResultsScreenViewModel,
 
                 onFoodCardClicked = onFoodCardClicked,
-                nutritionPreferences = appState.nutritionPreferences
+                nutritionPreferences = appState.nutritionPreferences,
+                filterPreferences = appState.filterPreferences
             )
         }
         composable<FoodDetailScreenNavRoute>(

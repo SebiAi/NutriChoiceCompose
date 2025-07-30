@@ -2,7 +2,9 @@ package com.sebiai.nutrichoicecompose.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,9 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.sebiai.nutrichoicecompose.R
+import com.sebiai.nutrichoicecompose.composables.FilterPreference
+import com.sebiai.nutrichoicecompose.composables.FilterPreferenceSelection
 import com.sebiai.nutrichoicecompose.composables.NutritionPreferenceSelection
-import com.sebiai.nutrichoicecompose.composables.Preference
+import com.sebiai.nutrichoicecompose.composables.NutritionPreference
+import com.sebiai.nutrichoicecompose.dataclasses.FilterPreferences
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
@@ -27,9 +33,11 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
 
     initialNutritionPreferences: NutritionPreferences,
-    onSavePreferences: (NutritionPreferences) -> Unit
+    initialFilterPreferences: FilterPreferences,
+    onSavePreferences: (NutritionPreferences, FilterPreferences) -> Unit
 ) {
     var nutritionValues by rememberSaveable { mutableStateOf(initialNutritionPreferences) }
+    var filterPreferences by rememberSaveable { mutableStateOf(initialFilterPreferences) }
     val isSelectionValid: Boolean = nutritionValues.countTrueBooleans() <= 3
 
     Column(
@@ -37,28 +45,38 @@ fun SettingsScreen(
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        NutritionPreferenceSelection(
-            nutritionPreferences = nutritionValues,
-            onPreferenceClicked = { preference, newState ->
-                nutritionValues = when (preference) {
-                    Preference.PROTEIN -> nutritionValues.copy(protein = newState)
-                    Preference.CARBS -> nutritionValues.copy(carbs = newState)
-                    Preference.FATS -> nutritionValues.copy(fat = newState)
-                    Preference.CALORIES -> nutritionValues.copy(calories = newState)
-                    Preference.ECO_FRIENDLY -> nutritionValues.copy(ecoFriendly = newState)
-                    Preference.HEALTHY -> nutritionValues.copy(healthy = newState)
-                    Preference.VEGETARIAN -> nutritionValues.copy(vegetarian = newState)
-                    Preference.VEGAN -> nutritionValues.copy(vegan = newState)
-                }
-            },
+        Column {
+            NutritionPreferenceSelection(
+                nutritionPreferences = nutritionValues,
+                onPreferenceClicked = { preference, newState ->
+                    nutritionValues = when (preference) {
+                        NutritionPreference.PROTEIN -> nutritionValues.copy(protein = newState)
+                        NutritionPreference.CARBS -> nutritionValues.copy(carbs = newState)
+                        NutritionPreference.FATS -> nutritionValues.copy(fat = newState)
+                        NutritionPreference.CALORIES -> nutritionValues.copy(calories = newState)
+                        NutritionPreference.ECO_FRIENDLY -> nutritionValues.copy(ecoFriendly = newState)
+                        NutritionPreference.HEALTHY -> nutritionValues.copy(healthy = newState)
+                    }
+                },
 
-            validationErrorText = stringResource(R.string.preferences_validation_error),
-            validationError = !isSelectionValid,
-            hideSettingsHint = true
-        )
+                validationErrorText = stringResource(R.string.preferences_validation_error),
+                validationError = !isSelectionValid,
+                hideSettingsHint = true
+            )
+            Spacer(modifier = Modifier.height(28.dp))
+            FilterPreferenceSelection(
+                filterPreferences = filterPreferences,
+                onPreferenceClicked = { preference, newState ->
+                    filterPreferences = when (preference) {
+                        FilterPreference.VEGETARIAN -> filterPreferences.copy(vegetarian = newState)
+                        FilterPreference.VEGAN -> filterPreferences.copy(vegan = newState)
+                    }
+                }
+            )
+        }
         Button(
             enabled = isSelectionValid,
-            onClick = { onSavePreferences(nutritionValues) }
+            onClick = { onSavePreferences(nutritionValues, filterPreferences) }
         ) {
             Text(
                 style = MaterialTheme.typography.titleLarge,
@@ -76,7 +94,8 @@ private fun SettingsScreenPreview() {
         SettingsScreen(
             modifier = Modifier.fillMaxSize(),
             initialNutritionPreferences = NutritionPreferences(),
-            onSavePreferences = {}
+            initialFilterPreferences = FilterPreferences(),
+            onSavePreferences = { _, _ -> }
         )
     }
 }
