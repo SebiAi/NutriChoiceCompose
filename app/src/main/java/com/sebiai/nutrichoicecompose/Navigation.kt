@@ -95,6 +95,7 @@ fun AppNavHost(
                 onSavePreferences = { nutritionPreferences ->
                     appViewModel.updateNutritionPreferences(nutritionPreferences)
                     navController.popBackStack() // Navigate back to HomeScreen
+                    appViewModel.showSnackbar(navController.context.getString(R.string.preferences_saved))
                 }
             )
         }

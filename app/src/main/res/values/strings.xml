@@ -45,6 +45,7 @@
     <string name="preferences_dietary_header">Select dietary needs:</string>
     <string name="preferences_chip_vegetarian">Vegetarian</string>
     <string name="preferences_chip_vegan">Vegan</string>
+    <string name="preferences_saved">Preferences saved!</string>
 
     <!-- Screen titles -->
     <string name="low_calories">Low Calories</string>
