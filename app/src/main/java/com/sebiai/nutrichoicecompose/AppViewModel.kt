@@ -1,5 +1,6 @@
 package com.sebiai.nutrichoicecompose
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
@@ -10,7 +11,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class AppState(
-    val nutritionPreferences: NutritionPreferences = NutritionPreferences()
+    val nutritionPreferences: NutritionPreferences = NutritionPreferences(),
+
+    val snackBarHostState: SnackbarHostState = SnackbarHostState()
 )
 
 class AppViewModel : ViewModel() {
@@ -28,6 +31,12 @@ class AppViewModel : ViewModel() {
             currentState.copy(
                 nutritionPreferences = newNutritionPreferences
             )
+        }
+    }
+
+    fun showSnackbar(message: String) {
+        viewModelScope.launch {
+            _appState.value.snackBarHostState.showSnackbar(message)
         }
     }
 }
