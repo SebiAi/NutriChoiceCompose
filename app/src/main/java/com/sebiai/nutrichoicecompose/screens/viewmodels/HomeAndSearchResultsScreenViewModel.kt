@@ -67,6 +67,7 @@ class HomeAndSearchResultsScreenViewModel : ViewModel() {
                 searchResults = Data.search(query, filters)
             )
         }
+        _searchAndResultsScreenUiState.value.resultScrollState.requestScrollToItem(0)
     }
 
     fun updateFilterState(newFilterState: FilterState) {

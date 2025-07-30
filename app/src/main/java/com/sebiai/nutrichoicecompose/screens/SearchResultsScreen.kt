@@ -48,7 +48,6 @@ fun SearchResultsScreen(
         onSearch = { query: String ->
                 Log.d(null, "Searched with query \"$query\"")
                 viewModel.performSearch(query, sharedUiState.filterState)
-                uiState.resultScrollState.requestScrollToItem(0)
         },
         onQueryChanged = viewModel::updateSearchQuery,
         onClearQuery = { viewModel.updateSearchQuery("") },
