@@ -72,6 +72,7 @@ fun NutritionPreferenceSelection(
             )
             Surface(
                 modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.surfaceContainerLow,
                 shape = RoundedCornerShape(16.dp),
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceContainerHigh)
             ) {
