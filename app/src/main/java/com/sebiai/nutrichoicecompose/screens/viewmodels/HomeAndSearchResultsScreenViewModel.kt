@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
 import com.sebiai.nutrichoicecompose.dataclasses.Data
 import com.sebiai.nutrichoicecompose.dataclasses.FilterState
-import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,17 +14,7 @@ import kotlinx.coroutines.flow.update
 
 data class SharedSearchFunctionUiState(
     val searchQuery: String = "",
-    val filterState: FilterState = FilterState(),
-    val nutritionPreferences: NutritionPreferences = NutritionPreferences(
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true
-    ),
+    val filterState: FilterState = FilterState()
 )
 
 data class HomeScreenUiState(
@@ -84,14 +73,6 @@ class HomeAndSearchResultsScreenViewModel : ViewModel() {
         _sharedSearchFunctionUiState.update { currentState ->
             currentState.copy(
                 filterState = newFilterState
-            )
-        }
-    }
-
-    fun updateNutritionPreferences(newNutritionPreferences: NutritionPreferences) {
-        _sharedSearchFunctionUiState.update { currentState ->
-            currentState.copy(
-                nutritionPreferences = newNutritionPreferences
             )
         }
     }

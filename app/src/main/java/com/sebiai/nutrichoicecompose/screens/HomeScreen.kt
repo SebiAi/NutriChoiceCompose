@@ -32,10 +32,12 @@ import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    onFoodCardClicked: (AFood, NutritionPreferences) -> Unit,
-    afterSearchPerformed: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HomeAndSearchResultsScreenViewModel = viewModel()
+    viewModel: HomeAndSearchResultsScreenViewModel = viewModel(),
+
+    onFoodCardClicked: (AFood) -> Unit,
+    afterSearchPerformed: () -> Unit,
+    nutritionPreferences: NutritionPreferences
 ) {
     val uiState by viewModel.homeScreenUiState.collectAsStateWithLifecycle()
     val sharedUiState by viewModel.sharedSearchFunctionUiState.collectAsStateWithLifecycle()
@@ -72,14 +74,14 @@ fun HomeScreen(
         items(items = uiState.recentlyViewedFoods) {
             FoodCard(
                 modifier = Modifier.clickable(
-                    onClick = { onFoodCardClicked(it, sharedUiState.nutritionPreferences) }
+                    onClick = { onFoodCardClicked(it) }
                 ),
                 type = FoodCardType.BIG,
                 image = it.getImage(LocalContext.current),
                 title = it.title,
                 priceString = it.getPriceString(LocalContext.current),
                 isRestaurantFood = it is Meal,
-                customizableChips = determineCustomizableChips(LocalContext.current, it, sharedUiState.nutritionPreferences)
+                customizableChips = determineCustomizableChips(LocalContext.current, it, nutritionPreferences)
             )
         }
     }
@@ -93,8 +95,18 @@ private fun HomeScreenPreview() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(12.dp),
-            onFoodCardClicked = {food, nutritionPreferences -> },
-            afterSearchPerformed = {}
+            onFoodCardClicked = {},
+            afterSearchPerformed = {},
+            nutritionPreferences = NutritionPreferences(
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+            )
         )
     }
 }

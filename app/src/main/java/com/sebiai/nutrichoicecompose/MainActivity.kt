@@ -15,6 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.sebiai.nutrichoicecompose.composables.MyTopAppBar
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
@@ -31,7 +33,12 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainActivityContent(modifier: Modifier = Modifier) {
+fun MainActivityContent(
+    modifier: Modifier = Modifier,
+    appViewModel: AppViewModel = viewModel()
+) {
+    val appState by appViewModel.appState.collectAsStateWithLifecycle()
+
     // Navigation
     val navController = rememberNavController()
     val startDestination = HomeNavRoute
@@ -66,7 +73,7 @@ fun MainActivityContent(modifier: Modifier = Modifier) {
                         },
                         showSettingsAction = appBarShowSettingsAction,
                         onSettingsActionClick = {
-                            navController.navigate(route = SettingsNavRoute)
+                            navController.navigate(SettingsNavRoute(appState.nutritionPreferences))
                         }
                     )
             }
@@ -74,6 +81,7 @@ fun MainActivityContent(modifier: Modifier = Modifier) {
             AppNavHost(
                 navController,
                 startDestination,
+                appViewModel,
                 modifier = Modifier.padding(innerPadding)
             )
         }

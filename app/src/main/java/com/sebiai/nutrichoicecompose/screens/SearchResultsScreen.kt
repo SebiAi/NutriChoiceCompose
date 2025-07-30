@@ -32,9 +32,11 @@ import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchResultsScreen(
-    onFoodCardClicked: (AFood, NutritionPreferences) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HomeAndSearchResultsScreenViewModel = viewModel()
+    viewModel: HomeAndSearchResultsScreenViewModel = viewModel(),
+
+    onFoodCardClicked: (AFood) -> Unit,
+    nutritionPreferences: NutritionPreferences
 ) {
     val uiState by viewModel.searchAndResultsScreenUiState.collectAsStateWithLifecycle()
     val sharedUiState by viewModel.sharedSearchFunctionUiState.collectAsStateWithLifecycle()
@@ -70,7 +72,7 @@ fun SearchResultsScreen(
                 modifier = Modifier.clickable(
                     onClick = {
                         viewModel.addRecentlyViewedFood(it)
-                        onFoodCardClicked(it, sharedUiState.nutritionPreferences)
+                        onFoodCardClicked(it)
                     }
                 ),
                 type = FoodCardType.BIG,
@@ -81,7 +83,7 @@ fun SearchResultsScreen(
                 customizableChips = determineCustomizableChips(
                     LocalContext.current,
                     it,
-                    sharedUiState.nutritionPreferences
+                    nutritionPreferences
                 )
             )
         }
@@ -96,7 +98,17 @@ private fun SearchResultsScreenPreview() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(12.dp),
-            onFoodCardClicked = {food, nutritionPreferences -> }
+            onFoodCardClicked = {},
+            nutritionPreferences = NutritionPreferences(
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+            )
         )
     }
 }

@@ -3,8 +3,10 @@ package com.sebiai.nutrichoicecompose
 import android.content.Context
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -51,11 +53,13 @@ fun getTitleForCurrentRoute(context: Context, route: String): String {
 fun AppNavHost(
     navController: NavHostController,
     startDestination: Any,
+    appViewModel: AppViewModel,
     modifier: Modifier = Modifier
 ) {
-    val onFoodCardClicked: (AFood, NutritionPreferences) -> Unit = { food, nutritionPreferences -> navController.navigate(FoodDetailScreenNavRoute(food.id, nutritionPreferences)) }
-
+    val appState by appViewModel.appState.collectAsStateWithLifecycle()
     val sharedHomeAndSearchResultsScreenViewModel: HomeAndSearchResultsScreenViewModel = viewModel()
+
+    val onFoodCardClicked: (AFood) -> Unit = { food -> navController.navigate(FoodDetailScreenNavRoute(food.id, appState.nutritionPreferences)) }
 
     NavHost(
         navController,
@@ -65,19 +69,20 @@ fun AppNavHost(
         composable<HomeNavRoute> {
             HomeScreen(
                 modifier = Modifier.padding(12.dp),
+                viewModel = sharedHomeAndSearchResultsScreenViewModel,
+
                 onFoodCardClicked = onFoodCardClicked,
                 afterSearchPerformed = { navController.navigate(SearchResultsNavRoute) },
-                viewModel = sharedHomeAndSearchResultsScreenViewModel
+                nutritionPreferences = appState.nutritionPreferences
             )
-        }
-        composable<SettingsNavRoute> {
-            SettingsScreen()
         }
         composable<SearchResultsNavRoute> {
             SearchResultsScreen(
                 modifier = Modifier.padding(12.dp),
+                viewModel = sharedHomeAndSearchResultsScreenViewModel,
+
                 onFoodCardClicked = onFoodCardClicked,
-                viewModel = sharedHomeAndSearchResultsScreenViewModel
+                nutritionPreferences = appState.nutritionPreferences
             )
         }
         composable<FoodDetailScreenNavRoute>(
