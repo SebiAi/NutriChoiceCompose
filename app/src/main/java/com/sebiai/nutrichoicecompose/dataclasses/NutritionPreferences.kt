@@ -21,4 +21,17 @@ data class NutritionPreferences(
         false, false, false,
         false, false
     )
+
+    fun countTrueBooleans(): Int {
+        return listOf(
+            protein,
+            carbs,
+            fat,
+            calories,
+            ecoFriendly,
+            healthy,
+            vegan,
+            vegetarian
+        ).count { it }
+    }
 }
