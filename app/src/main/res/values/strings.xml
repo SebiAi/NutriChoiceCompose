@@ -13,6 +13,7 @@
     <string name="no_recently_viewed_subtitle">You will find your recently viewed foods here.</string>
     <string name="no_search_results_heading">No results</string>
     <string name="no_search_results_subtitle">Try searching for something different or using a less restrictive filter.</string>
+    <string name="done_confirmation">Done</string>
 
     <!-- Content description stuff -->
     <string name="content_description_filter_button_icon">Filter</string>
