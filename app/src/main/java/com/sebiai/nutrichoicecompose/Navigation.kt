@@ -79,7 +79,9 @@ fun AppNavHost(
                 onFoodCardClicked = onFoodCardClicked,
                 afterSearchPerformed = { navController.navigate(SearchResultsNavRoute) },
                 nutritionPreferences = appState.nutritionPreferences,
-                filterPreferences = appState.filterPreferences
+                filterPreferences = appState.filterPreferences,
+
+                onShowSnackBar = appViewModel::showSnackBar
             )
         }
         composable<SettingsNavRoute>(
@@ -116,7 +118,9 @@ fun AppNavHost(
 
                 onFoodCardClicked = onFoodCardClicked,
                 nutritionPreferences = appState.nutritionPreferences,
-                filterPreferences = appState.filterPreferences
+                filterPreferences = appState.filterPreferences,
+
+                onShowSnackBar = appViewModel::showSnackBar
             )
         }
         composable<FoodDetailScreenNavRoute>(

@@ -40,7 +40,9 @@ fun HomeScreen(
     onFoodCardClicked: (AFood) -> Unit,
     afterSearchPerformed: () -> Unit,
     nutritionPreferences: NutritionPreferences,
-    filterPreferences: FilterPreferences
+    filterPreferences: FilterPreferences,
+
+    onShowSnackBar: (String) -> Unit
 ) {
     val uiState by viewModel.homeScreenUiState.collectAsStateWithLifecycle()
     val sharedUiState by viewModel.sharedSearchFunctionUiState.collectAsStateWithLifecycle()
@@ -89,11 +91,15 @@ fun HomeScreen(
         }
     }
 
+    val filterAppliedMessage = stringResource(R.string.filter_applied)
     if (sharedUiState.showFilterBottomSheet) {
         FilterBottomSheet(
             initialFilterState = sharedUiState.filterState,
             filterPreferences = filterPreferences,
-            onSaveFilter = { viewModel.updateFilterState(it) },
+            onSaveFilter = {
+                viewModel.updateFilterState(it)
+                onShowSnackBar(filterAppliedMessage)
+            },
 
             onDismissRequest = {
                 viewModel.updateShowFilterBottomSheet(false)
@@ -120,7 +126,9 @@ private fun HomeScreenPreview() {
                 true,
                 true
             ),
-            filterPreferences = FilterPreferences()
+            filterPreferences = FilterPreferences(),
+
+            onShowSnackBar = {}
         )
     }
 }
