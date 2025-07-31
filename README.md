@@ -18,7 +18,7 @@ Minimum SDK version: 30
     </tr>
 </table>
 
-**Ligh Mode:**
+**Light Mode:**
 <table>
     <tr>
         <th><img src="assets/MainScreenLight.png" alt="Main screen in light mode"></th>
