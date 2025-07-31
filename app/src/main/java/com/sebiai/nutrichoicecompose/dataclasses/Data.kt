@@ -188,12 +188,12 @@ object Data {
             .filter{ x -> !filters.vegetarian || x.vegetarian }
             .filter{ x -> !filters.healthy || x.healthy }
             .filter{ x -> !filters.ecoFriendly || x.ecoFriendly }
-            .filter{ x -> !filters.highCalories || x.highCalories }
-            .filter{ x -> !filters.lowCalories || x.lowCalories }
+            .filter{ x -> filters.calories != FilterState.ThreeStateFilterState.HIGH || x.highCalories }
+            .filter{ x -> filters.calories != FilterState.ThreeStateFilterState.LOW || x.lowCalories }
             .filter{ x -> !filters.highProtein || x.highProtein }
             .filter{ x -> !filters.lowFat || x.lowFat }
-            .filter{ x -> !filters.highCarbs || x.highCarbs }
-            .filter{ x -> !filters.lowCarbs || x.lowCarbs }
+            .filter{ x -> filters.carbs != FilterState.ThreeStateFilterState.HIGH || x.highCarbs }
+            .filter{ x -> filters.carbs != FilterState.ThreeStateFilterState.LOW || x.lowCarbs }
             .filter{ x -> !filters.costEfficient || x.costEffective }
             .collect(Collectors.toList())
     }

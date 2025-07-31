@@ -1,23 +1,22 @@
 package com.sebiai.nutrichoicecompose.dataclasses
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
+
+@Serializable
+@Parcelize
 data class FilterState(
     val highProtein: Boolean,
-    val highCarbs: Boolean,
-    val lowCarbs: Boolean,
     val lowFat: Boolean,
-    val highCalories: Boolean,
-    val lowCalories: Boolean,
     val ecoFriendly: Boolean,
     val healthy: Boolean,
     val vegetarian: Boolean,
     val vegan: Boolean,
-    val costEfficient: Boolean
-) {
-    init {
-        assert(!lowCarbs || !highCarbs)
-        assert(!lowCalories || !highCalories)
-    }
-
+    val costEfficient: Boolean,
+    val carbs: ThreeStateFilterState,
+    val calories: ThreeStateFilterState
+) : Parcelable {
     constructor() : this(
         false,
         false,
@@ -26,9 +25,13 @@ data class FilterState(
         false,
         false,
         false,
-        false,
-        false,
-        false,
-        false
+        ThreeStateFilterState.NEUTRAL,
+        ThreeStateFilterState.NEUTRAL
     )
+
+    @Serializable
+    @Parcelize
+    enum class ThreeStateFilterState : Parcelable {
+        HIGH, NEUTRAL, LOW
+    }
 }
