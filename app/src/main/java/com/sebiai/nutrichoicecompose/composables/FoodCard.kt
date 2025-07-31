@@ -193,30 +193,6 @@ fun TitleAndMoneyRow(
     }
 }
 
-@Composable
-private fun CustomizablesRow(
-    customizableChips: List<String>,
-    modifier: Modifier = Modifier
-) {
-    LazyRow(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        items(items = customizableChips) {
-            SuggestionChip(
-                onClick = {},
-                label = {
-                    Text(
-                        text = it,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            )
-        }
-    }
-}
-
 fun determineCustomizableChips(context: Context, food: AFood, viewingPreferences: NutritionPreferences): List<String> {
     val result: MutableList<String> = mutableListOf()
     // Always visible

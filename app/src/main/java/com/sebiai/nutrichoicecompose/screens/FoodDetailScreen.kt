@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sebiai.nutrichoicecompose.R
+import com.sebiai.nutrichoicecompose.composables.CustomizablesRow
 import com.sebiai.nutrichoicecompose.composables.FoodCard
 import com.sebiai.nutrichoicecompose.composables.FoodCardType
 import com.sebiai.nutrichoicecompose.composables.RestaurantIndicatorIcon
@@ -61,6 +62,18 @@ fun FoodDetailScreen(
     modifier: Modifier = Modifier
 ) {
     val isRestaurantFood: Boolean = food is Meal
+    val customizables = determineCustomizableChips(
+        LocalContext.current,
+        food,
+        NutritionPreferences(
+            protein = true,
+            carbs = true,
+            fat = true,
+            calories = true,
+            ecoFriendly = true,
+            healthy = true,
+        )
+    )
 
     LazyColumn {
         // Image
@@ -89,9 +102,15 @@ fun FoodDetailScreen(
                         fontStyle = FontStyle.Italic
                     )
                 }
-                Spacer(
-                    modifier = Modifier.height(12.dp)
-                )
+                if (!customizables.isEmpty()) {
+                    CustomizablesRow(
+                        customizableChips = customizables
+                    )
+                } else {
+                    Spacer(
+                        modifier = Modifier.height(12.dp)
+                    )
+                }
                 NutritionTable(
                     nutritionValues = food.nutritionValues
                 )
