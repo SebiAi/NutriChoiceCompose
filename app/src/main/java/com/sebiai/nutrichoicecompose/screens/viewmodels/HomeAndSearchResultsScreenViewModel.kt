@@ -14,7 +14,8 @@ import kotlinx.coroutines.flow.update
 
 data class SharedSearchFunctionUiState(
     val searchQuery: String = "",
-    val filterState: FilterState = FilterState()
+    val filterState: FilterState = FilterState(),
+    val showFilterBottomSheet: Boolean = false
 )
 
 data class HomeScreenUiState(
@@ -74,6 +75,14 @@ class HomeAndSearchResultsScreenViewModel : ViewModel() {
         _sharedSearchFunctionUiState.update { currentState ->
             currentState.copy(
                 filterState = newFilterState
+            )
+        }
+    }
+
+    fun updateShowFilterBottomSheet(newShowFilterBottomSheet: Boolean) {
+        _sharedSearchFunctionUiState.update { currentState ->
+            currentState.copy(
+                showFilterBottomSheet = newShowFilterBottomSheet
             )
         }
     }

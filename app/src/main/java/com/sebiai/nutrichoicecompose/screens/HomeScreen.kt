@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sebiai.nutrichoicecompose.R
+import com.sebiai.nutrichoicecompose.composables.FilterBottomSheet
 import com.sebiai.nutrichoicecompose.composables.FoodCard
 import com.sebiai.nutrichoicecompose.composables.FoodCardType
 import com.sebiai.nutrichoicecompose.composables.SearchAndListComponent
@@ -58,7 +59,7 @@ fun HomeScreen(
         },
         onQueryChanged = viewModel::updateSearchQuery,
         onClearQuery = { viewModel.updateSearchQuery("") },
-        onFilterClicked = {},
+        onFilterClicked = { viewModel.updateShowFilterBottomSheet(true) },
 
         listHeading = @Composable {
             Text(
@@ -86,6 +87,18 @@ fun HomeScreen(
                 customizableChips = determineCustomizableChips(LocalContext.current, it, nutritionPreferences)
             )
         }
+    }
+
+    if (sharedUiState.showFilterBottomSheet) {
+        FilterBottomSheet(
+            initialFilterState = sharedUiState.filterState,
+            filterPreferences = filterPreferences,
+            onSaveFilter = { viewModel.updateFilterState(it) },
+
+            onDismissRequest = {
+                viewModel.updateShowFilterBottomSheet(false)
+            }
+        )
     }
 }
 
