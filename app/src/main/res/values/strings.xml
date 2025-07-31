@@ -14,6 +14,10 @@
     <string name="no_search_results_heading">No results</string>
     <string name="no_search_results_subtitle">Try searching for something different or using a less restrictive filter.</string>
     <string name="done_confirmation">Done</string>
+    <string name="filter_heading">Filter</string>
+    <string name="filter_multi_select_heading">Multi select:</string>
+    <string name="filter_single_select_heading">Single select:</string>
+    <string name="filter_single_select_neutral_position_label">-</string>
 
     <!-- Content description stuff -->
     <string name="content_description_filter_button_icon">Filter</string>
