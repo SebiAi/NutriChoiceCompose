@@ -123,12 +123,12 @@ private fun SearchResultsScreenPreview() {
                 .padding(12.dp),
             onFoodCardClicked = {},
             nutritionPreferences = NutritionPreferences(
-                true,
-                true,
-                true,
-                true,
-                true,
-                true
+                protein = true,
+                carbs = true,
+                fat = true,
+                calories = true,
+                ecoFriendly = true,
+                healthy = true
             ),
             filterPreferences = FilterPreferences(),
 

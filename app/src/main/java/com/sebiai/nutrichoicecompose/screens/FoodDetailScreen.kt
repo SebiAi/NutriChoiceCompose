@@ -313,7 +313,14 @@ private fun FoodDetailScreenWithIngredientPreview() {
                 dietaryPreferences = AFood.DietaryPreferences.VEGAN
             ),
             onFoodCardClicked = {food, nutritionPreferences -> },
-            nutritionPreferences = NutritionPreferences(true, true, true, true, true, true),
+            nutritionPreferences = NutritionPreferences(
+                protein = true,
+                carbs = true,
+                fat = true,
+                calories = true,
+                ecoFriendly = true,
+                healthy = true
+            ),
             modifier = Modifier
                 .fillMaxSize()
         )
@@ -346,7 +353,14 @@ private fun FoodDetailScreenWithMealPreview() {
                 restaurant = Mensa("Mensa Uni Wien")
             ),
             onFoodCardClicked = {food, nutritionPreferences -> },
-            nutritionPreferences = NutritionPreferences(true, true, true, true, true, true),
+            nutritionPreferences = NutritionPreferences(
+                protein = true,
+                carbs = true,
+                fat = true,
+                calories = true,
+                ecoFriendly = true,
+                healthy = true
+            ),
             modifier = Modifier
                 .fillMaxSize()
         )

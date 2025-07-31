@@ -121,12 +121,12 @@ private fun HomeScreenPreview() {
             onFoodCardClicked = {},
             afterSearchPerformed = {},
             nutritionPreferences = NutritionPreferences(
-                true,
-                true,
-                true,
-                true,
-                true,
-                true
+                protein = true,
+                carbs = true,
+                fat = true,
+                calories = true,
+                ecoFriendly = true,
+                healthy = true
             ),
             filterPreferences = FilterPreferences(),
 

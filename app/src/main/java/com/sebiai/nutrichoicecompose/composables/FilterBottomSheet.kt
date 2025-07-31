@@ -311,15 +311,15 @@ private fun FilterBottomSheetPreview() {
             modifier = Modifier.fillMaxSize(),
 
             initialFilterState = FilterState(
-                true,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false,
-                FilterState.ThreeStateFilterState.LOW,
-                FilterState.ThreeStateFilterState.NEUTRAL
+                highProtein = true,
+                lowFat = false,
+                ecoFriendly = false,
+                healthy = true,
+                vegetarian = false,
+                vegan = false,
+                costEfficient = false,
+                carbs = FilterState.ThreeStateFilterState.LOW,
+                calories = FilterState.ThreeStateFilterState.NEUTRAL
             ),
             filterPreferences = FilterPreferences(),
 
