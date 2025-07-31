@@ -21,6 +21,11 @@
     <string name="button_reset">Reset</string>
     <string name="button_apply">Apply</string>
     <string name="filter_applied">Filter applied!</string>
+    <string name="restaurant_indicator_icon_tooltip">Restaurant Indicator</string>
+    <string name="ok_confirmation">OK</string>
+
+    <!-- RestaurantIndicatorInfoDialog -->
+    <string name="restaurant_indicator_description">This icon indicates that this food is available in a certain restaurant.</string>
 
     <!-- Content description stuff -->
     <string name="content_description_filter_button_icon">Filter</string>

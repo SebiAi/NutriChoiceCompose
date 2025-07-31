@@ -18,12 +18,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -42,6 +51,7 @@ import com.sebiai.nutrichoicecompose.composables.CustomizablesRow
 import com.sebiai.nutrichoicecompose.composables.FoodCard
 import com.sebiai.nutrichoicecompose.composables.FoodCardType
 import com.sebiai.nutrichoicecompose.composables.RestaurantIndicatorIcon
+import com.sebiai.nutrichoicecompose.composables.RestaurantIndicatorInfoDialog
 import com.sebiai.nutrichoicecompose.composables.TitleAndMoneyRow
 import com.sebiai.nutrichoicecompose.composables.determineCustomizableChips
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
@@ -174,6 +184,7 @@ fun FoodDetailScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ImageContent(
     image: ImageBitmap,
@@ -195,11 +206,32 @@ private fun ImageContent(
             contentScale = ContentScale.Crop
         )
         if (showRestaurantIndicatorIcon) {
-            RestaurantIndicatorIcon(
-                modifier = Modifier
-                    .size(46.dp)
-                    .offset((-12).dp, (12).dp)
-            )
+            var openRestaurantIndicatorInfoDialog by remember { mutableStateOf(false) }
+
+            TooltipBox(
+                positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                tooltip = {
+                    PlainTooltip(
+                        modifier = Modifier.padding(6.dp, 0.dp)
+                    ) { Text(text = stringResource(R.string.restaurant_indicator_icon_tooltip)) }
+                },
+                state = rememberTooltipState(),
+                focusable = false
+            ) {
+                RestaurantIndicatorIcon(
+                    modifier = Modifier
+                        .size(46.dp)
+                        .offset((-12).dp, (12).dp)
+                        .clickable(
+                            onClick = { openRestaurantIndicatorInfoDialog = true }
+                        )
+                )
+            }
+            if (openRestaurantIndicatorInfoDialog) {
+                RestaurantIndicatorInfoDialog(
+                    onDismiss = { openRestaurantIndicatorInfoDialog = false }
+                )
+            }
         }
     }
 }
