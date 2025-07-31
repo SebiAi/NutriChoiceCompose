@@ -21,6 +21,11 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
@@ -30,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.sebiai.nutrichoicecompose.R
+import com.sebiai.nutrichoicecompose.dataclasses.FilterPreferences
 import com.sebiai.nutrichoicecompose.dataclasses.FilterState
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
@@ -62,13 +68,34 @@ private data class SingeSelectButtonData(
 fun FilterBottomSheet(
     modifier: Modifier = Modifier,
 
-    filterState: FilterState,
-    onMultiSelectFilterStateChanged: (multiSelectFilterSetting: MultiSelectFilterSetting, newState: Boolean) -> Unit,
-    onSingleSelectFilterStateChanged: (singleSelectFilterSetting: SingleSelectFilterSetting, newState: FilterState.ThreeStateFilterState) -> Unit,
+    initialFilterState: FilterState,
+    filterPreferences: FilterPreferences,
+    onSaveFilter: (FilterState) -> Unit,
 
     onDismissRequest: () -> Unit,
-    sheetState: SheetState = rememberModalBottomSheetState()
+    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 ) {
+    val scope = rememberCoroutineScope()
+    var filterState by rememberSaveable { mutableStateOf(initialFilterState) }
+
+    val onMultiSelectFilterStateChanged: (MultiSelectFilterSetting, Boolean) -> Unit = { multiSelectFilterSetting, newState ->
+        filterState = when (multiSelectFilterSetting) {
+            MultiSelectFilterSetting.HIGH_PROTEIN -> filterState.copy(highProtein = newState)
+            MultiSelectFilterSetting.LOW_FAT -> filterState.copy(lowFat = newState)
+            MultiSelectFilterSetting.ECO_FRIENDLY -> filterState.copy(ecoFriendly = newState)
+            MultiSelectFilterSetting.HEALTHY -> filterState.copy(healthy = newState)
+            MultiSelectFilterSetting.VEGETARIAN -> filterState.copy(vegetarian = newState)
+            MultiSelectFilterSetting.VEGAN -> filterState.copy(vegan = newState)
+            MultiSelectFilterSetting.COST_EFFICIENT -> filterState.copy(costEfficient = newState)
+        }
+    }
+    val onSingleSelectFilterStateChanged: (SingleSelectFilterSetting, FilterState.ThreeStateFilterState) -> Unit =  { singleSelectFilterSetting, newState ->
+        filterState = when (singleSelectFilterSetting) {
+            SingleSelectFilterSetting.CARBS -> filterState.copy(carbs = newState)
+            SingleSelectFilterSetting.CALORIES -> filterState.copy(calories = newState)
+        }
+    }
+
     ModalBottomSheet(
         modifier = modifier,
         onDismissRequest = onDismissRequest,
@@ -245,7 +272,7 @@ private fun FilterBottomSheetPreview() {
         FilterBottomSheet(
             modifier = Modifier.fillMaxSize(),
 
-            filterState = FilterState(
+            initialFilterState = FilterState(
                 true,
                 false,
                 false,
@@ -256,10 +283,11 @@ private fun FilterBottomSheetPreview() {
                 FilterState.ThreeStateFilterState.LOW,
                 FilterState.ThreeStateFilterState.NEUTRAL
             ),
-            onMultiSelectFilterStateChanged = { _, _ -> },
-            onSingleSelectFilterStateChanged = { _, _ -> },
+            filterPreferences = FilterPreferences(),
 
+            onSaveFilter = {},
             onDismissRequest = {},
+
             // Use rememberModalBottomSheetState for real implementations
             sheetState = SheetState(
                 skipPartiallyExpanded = true,
