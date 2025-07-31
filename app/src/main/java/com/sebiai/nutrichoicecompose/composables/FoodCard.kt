@@ -221,7 +221,7 @@ fun determineCustomizableChips(context: Context, food: AFood, viewingPreferences
     val result: MutableList<String> = mutableListOf()
     // Always visible
     if (food.vegan) result.add(context.getString(R.string.preferences_chip_vegan))
-    if (food.vegetarian) result.add(context.getString(R.string.preferences_chip_vegetarian))
+    if (food.vegetarian && !food.vegan) result.add(context.getString(R.string.preferences_chip_vegetarian))
 
     // Only show if the user specified it in the preferences
     if (food.healthy && viewingPreferences.healthy) result.add(context.getString(R.string.preferences_chip_healthy))
