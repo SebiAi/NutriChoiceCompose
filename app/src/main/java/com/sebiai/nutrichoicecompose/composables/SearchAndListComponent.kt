@@ -41,6 +41,7 @@ fun SearchAndListComponent(
     onQueryChanged: (String) -> Unit,
     onClearQuery: () -> Unit,
     onFilterClicked: () -> Unit,
+    showFilterBadge: Boolean,
 
     listHeading: @Composable () -> Unit,
     isListEmpty: Boolean,
@@ -83,6 +84,7 @@ fun SearchAndListComponent(
             onQueryChanged = onQueryChanged,
             onClearQuery = onClearQuery,
             onFilterClicked = onFilterClicked,
+            showFilterBadge = showFilterBadge,
             hint = stringResource(R.string.search_bar_hint)
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -125,6 +127,7 @@ private fun SearchAndListComponentPreview() {
             onQueryChanged = { query = it },
             onClearQuery = { query = "" },
             onFilterClicked = {},
+            showFilterBadge = true,
 
             listHeading = @Composable {
                 Text(

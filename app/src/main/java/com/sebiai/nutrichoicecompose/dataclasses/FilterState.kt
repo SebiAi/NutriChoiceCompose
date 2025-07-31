@@ -45,4 +45,38 @@ data class FilterState(
     enum class ThreeStateFilterState : Parcelable {
         HIGH, NEUTRAL, LOW
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as FilterState
+
+        if (highProtein != other.highProtein) return false
+        if (lowFat != other.lowFat) return false
+        if (ecoFriendly != other.ecoFriendly) return false
+        if (healthy != other.healthy) return false
+        if (vegetarian != other.vegetarian) return false
+        if (vegan != other.vegan) return false
+        if (costEfficient != other.costEfficient) return false
+        if (carbs != other.carbs) return false
+        if (calories != other.calories) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = highProtein.hashCode()
+        result = 31 * result + lowFat.hashCode()
+        result = 31 * result + ecoFriendly.hashCode()
+        result = 31 * result + healthy.hashCode()
+        result = 31 * result + vegetarian.hashCode()
+        result = 31 * result + vegan.hashCode()
+        result = 31 * result + costEfficient.hashCode()
+        result = 31 * result + carbs.hashCode()
+        result = 31 * result + calories.hashCode()
+        return result
+    }
+
+
 }

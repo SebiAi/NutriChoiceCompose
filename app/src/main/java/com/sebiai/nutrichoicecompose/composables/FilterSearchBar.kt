@@ -17,6 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.FilterAlt
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
@@ -50,6 +52,7 @@ fun FilterSearchBar(
     onQueryChanged: (String) -> Unit,
     onClearQuery: () -> Unit,
     onFilterClicked: () -> Unit,
+    showFilterBadge: Boolean,
     modifier: Modifier = Modifier,
     hint: String = ""
 ) {
@@ -75,11 +78,16 @@ fun FilterSearchBar(
                 .aspectRatio(1F),
             onClick = onFilterClicked
         ) {
-            Icon(
-                imageVector = Icons.Outlined.FilterAlt,
-                contentDescription = stringResource(R.string.content_description_filter_button_icon)
-            )
+            BadgedBox(
+                badge = { if (showFilterBadge) Badge() }
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.FilterAlt,
+                    contentDescription = stringResource(R.string.content_description_filter_button_icon)
+                )
+            }
         }
+
     }
 }
 
@@ -172,7 +180,8 @@ private fun FilterSearchBarWithQueryPreview() {
             onSearch = {},
             onQueryChanged = {},
             onClearQuery = {},
-            onFilterClicked = {}
+            onFilterClicked = {},
+            showFilterBadge = true
         )
     }
 }
@@ -187,6 +196,7 @@ private fun FilterSearchBarOnlyHintPreview() {
             onQueryChanged = {},
             onClearQuery = {},
             onFilterClicked = {},
+            showFilterBadge = false,
             hint = "Hint"
         )
     }

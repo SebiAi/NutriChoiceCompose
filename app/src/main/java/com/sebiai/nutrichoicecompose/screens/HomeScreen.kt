@@ -26,6 +26,7 @@ import com.sebiai.nutrichoicecompose.composables.SearchAndListComponent
 import com.sebiai.nutrichoicecompose.composables.determineCustomizableChips
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
 import com.sebiai.nutrichoicecompose.dataclasses.FilterPreferences
+import com.sebiai.nutrichoicecompose.dataclasses.FilterState
 import com.sebiai.nutrichoicecompose.dataclasses.Meal
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import com.sebiai.nutrichoicecompose.screens.viewmodels.HomeAndSearchResultsScreenViewModel
@@ -62,6 +63,7 @@ fun HomeScreen(
         onQueryChanged = viewModel::updateSearchQuery,
         onClearQuery = { viewModel.updateSearchQuery("") },
         onFilterClicked = { viewModel.updateShowFilterBottomSheet(true) },
+        showFilterBadge = sharedUiState.filterState != FilterState(filterPreferences),
 
         listHeading = @Composable {
             Text(
