@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sebiai.nutrichoicecompose.R
+import com.sebiai.nutrichoicecompose.composables.FilterBottomSheet
 import com.sebiai.nutrichoicecompose.composables.FoodCard
 import com.sebiai.nutrichoicecompose.composables.FoodCardType
 import com.sebiai.nutrichoicecompose.composables.SearchAndListComponent
@@ -53,7 +54,7 @@ fun SearchResultsScreen(
         },
         onQueryChanged = viewModel::updateSearchQuery,
         onClearQuery = { viewModel.updateSearchQuery("") },
-        onFilterClicked = {},
+        onFilterClicked = { viewModel.updateShowFilterBottomSheet(true) },
 
         listHeading = @Composable {
             Text(
@@ -88,6 +89,21 @@ fun SearchResultsScreen(
                 )
             )
         }
+    }
+
+    if (sharedUiState.showFilterBottomSheet) {
+        FilterBottomSheet(
+            initialFilterState = sharedUiState.filterState,
+            filterPreferences = filterPreferences,
+            onSaveFilter = {
+                viewModel.updateFilterState(it)
+                viewModel.performSearch(sharedUiState.searchQuery, it)
+            },
+
+            onDismissRequest = {
+                viewModel.updateShowFilterBottomSheet(false)
+            }
+        )
     }
 }
 
