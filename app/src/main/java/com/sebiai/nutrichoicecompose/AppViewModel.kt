@@ -44,7 +44,7 @@ class AppViewModel : ViewModel() {
         }
     }
 
-    fun showSnackbar(message: String) {
+    fun showSnackBar(message: String) {
         viewModelScope.launch {
             _appState.value.snackBarHostState.showSnackbar(message)
         }

@@ -105,7 +105,7 @@ fun AppNavHost(
                     appViewModel.updateFilterPreferences(filterPreferences)
 
                     navController.popBackStack() // Navigate back to HomeScreen
-                    appViewModel.showSnackbar(navController.context.getString(R.string.preferences_saved))
+                    appViewModel.showSnackBar(navController.context.getString(R.string.preferences_saved))
                 }
             )
         }
