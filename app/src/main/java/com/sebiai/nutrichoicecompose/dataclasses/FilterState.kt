@@ -28,6 +28,17 @@ data class FilterState(
         ThreeStateFilterState.NEUTRAL,
         ThreeStateFilterState.NEUTRAL
     )
+    constructor(filterPreferences: FilterPreferences) : this(
+        highProtein = false,
+        lowFat = false,
+        ecoFriendly = false,
+        healthy = false,
+        vegetarian = filterPreferences.vegetarian,
+        vegan = filterPreferences.vegan,
+        costEfficient = false,
+        carbs = ThreeStateFilterState.NEUTRAL,
+        calories = ThreeStateFilterState.NEUTRAL
+    )
 
     @Serializable
     @Parcelize

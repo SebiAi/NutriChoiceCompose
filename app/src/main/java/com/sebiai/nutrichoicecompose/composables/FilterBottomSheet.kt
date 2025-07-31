@@ -247,17 +247,7 @@ fun FilterBottomSheet(
                 OutlinedButton(
                     modifier = Modifier.weight(1F),
                     onClick = {
-                        filterState = FilterState(
-                            highProtein = false,
-                            lowFat = false,
-                            ecoFriendly = false,
-                            healthy = false,
-                            vegetarian = filterPreferences.vegetarian,
-                            vegan = filterPreferences.vegan,
-                            costEfficient = false,
-                            carbs = FilterState.ThreeStateFilterState.NEUTRAL,
-                            calories = FilterState.ThreeStateFilterState.NEUTRAL
-                        )
+                        filterState = FilterState(filterPreferences)
                     }
                 ) {
                     Text(
