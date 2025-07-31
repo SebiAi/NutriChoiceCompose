@@ -113,14 +113,15 @@ fun FoodDetailScreen(
                     )
                 }
                 if (!customizables.isEmpty()) {
+                    HorizontalDivider()
                     CustomizablesRow(
                         customizableChips = customizables
                     )
-                } else {
-                    Spacer(
-                        modifier = Modifier.height(12.dp)
-                    )
+                    HorizontalDivider()
                 }
+                Spacer(
+                    modifier = Modifier.height(8.dp)
+                )
                 NutritionTable(
                     nutritionValues = food.nutritionValues
                 )
