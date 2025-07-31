@@ -1,18 +1,23 @@
 package com.sebiai.nutrichoicecompose.composables
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CheckBox
 import androidx.compose.material.icons.outlined.CheckBoxOutlineBlank
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SheetState
@@ -38,6 +43,7 @@ import com.sebiai.nutrichoicecompose.R
 import com.sebiai.nutrichoicecompose.dataclasses.FilterPreferences
 import com.sebiai.nutrichoicecompose.dataclasses.FilterState
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
+import kotlinx.coroutines.launch
 
 enum class MultiSelectFilterSetting {
     HIGH_PROTEIN, LOW_FAT, ECO_FRIENDLY, HEALTHY, VEGETARIAN, VEGAN, COST_EFFICIENT
@@ -230,6 +236,48 @@ fun FilterBottomSheet(
                             }
                         }
                     }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                OutlinedButton(
+                    modifier = Modifier.weight(1F),
+                    onClick = {
+                        filterState = FilterState(
+                            highProtein = false,
+                            lowFat = false,
+                            ecoFriendly = false,
+                            healthy = false,
+                            vegetarian = filterPreferences.vegetarian,
+                            vegan = filterPreferences.vegan,
+                            costEfficient = false,
+                            carbs = FilterState.ThreeStateFilterState.NEUTRAL,
+                            calories = FilterState.ThreeStateFilterState.NEUTRAL
+                        )
+                    }
+                ) {
+                    Text(
+                        text = stringResource(R.string.button_reset)
+                    )
+                }
+                Button(
+                    modifier = Modifier.weight(1F),
+                    onClick = {
+                        scope.launch { sheetState.hide() }.invokeOnCompletion {
+                            if (!sheetState.isVisible) {
+                                onDismissRequest()
+                            }
+                        }
+                        onSaveFilter(filterState)
+                    },
+                ) {
+                    Text(
+                        text = stringResource(R.string.button_apply)
+                    )
                 }
             }
         }

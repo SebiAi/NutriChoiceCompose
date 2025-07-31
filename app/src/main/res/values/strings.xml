@@ -18,6 +18,8 @@
     <string name="filter_multi_select_heading">Multi select:</string>
     <string name="filter_single_select_heading">Single select:</string>
     <string name="filter_single_select_neutral_position_label">-</string>
+    <string name="button_reset">Reset</string>
+    <string name="button_apply">Apply</string>
 
     <!-- Content description stuff -->
     <string name="content_description_filter_button_icon">Filter</string>
