@@ -23,6 +23,7 @@
     <string name="filter_applied">Filter applied!</string>
     <string name="restaurant_indicator_icon_tooltip">Restaurant Indicator</string>
     <string name="ok_confirmation">OK</string>
+    <string name="learn_more">Learn More</string>
 
     <!-- RestaurantIndicatorInfoDialog -->
     <string name="restaurant_indicator_description">This icon indicates that this food is available in a certain restaurant.</string>
