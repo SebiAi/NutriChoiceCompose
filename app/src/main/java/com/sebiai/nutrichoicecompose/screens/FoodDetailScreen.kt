@@ -1,5 +1,6 @@
 package com.sebiai.nutrichoicecompose.screens
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -39,6 +40,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
@@ -52,6 +54,7 @@ import com.sebiai.nutrichoicecompose.composables.FoodCard
 import com.sebiai.nutrichoicecompose.composables.FoodCardType
 import com.sebiai.nutrichoicecompose.composables.RestaurantIndicatorIcon
 import com.sebiai.nutrichoicecompose.composables.RestaurantIndicatorInfoDialog
+import com.sebiai.nutrichoicecompose.composables.ScoreInfoDialog
 import com.sebiai.nutrichoicecompose.composables.TitleAndMoneyRow
 import com.sebiai.nutrichoicecompose.composables.determineCustomizableChips
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
@@ -84,6 +87,55 @@ fun FoodDetailScreen(
             healthy = true,
         )
     )
+
+    val nutriScoreImage = food.getNutriScoreImage(LocalContext.current)
+    val nutriScoreImageContentDescription = stringResource(R.string.nutri_score_name)
+    val greenScoreImage = food.getGreenScoreImage(LocalContext.current)
+    val greenScoreImageContentDescription = stringResource(R.string.green_score_name)
+
+    var scoreInfoDialogType by remember { mutableStateOf(ScoreType.NUTRI_SCORE) }
+    var showScoreInfoDialog by remember { mutableStateOf(false) }
+    val uriHandler = LocalUriHandler.current
+    if (showScoreInfoDialog) {
+        when (scoreInfoDialogType) {
+            ScoreType.NUTRI_SCORE -> {
+                ScoreInfoDialog(
+                    title = nutriScoreImageContentDescription,
+                    scoreGeneralExplanation = stringResource(R.string.nutri_score_definition),
+                    currentScoreExplanation = getScoreExplanation(
+                        context = LocalContext.current,
+                        score = food.nutriScore,
+                        scoreType = ScoreType.NUTRI_SCORE
+                    ),
+                    currentScoreImage = nutriScoreImage,
+                    currentScoreImageContentDescription = nutriScoreImageContentDescription,
+
+                    onDismiss = { showScoreInfoDialog = false },
+                    onLearnMore = {
+                        uriHandler.openUri("https://en.wikipedia.org/wiki/Nutri-Score")
+                    }
+                )
+            }
+            ScoreType.GREEN_SCORE -> {
+                ScoreInfoDialog(
+                    title = greenScoreImageContentDescription,
+                    scoreGeneralExplanation = stringResource(R.string.green_score_definition),
+                    currentScoreExplanation = getScoreExplanation(
+                        context = LocalContext.current,
+                        score = food.greenScore,
+                        scoreType = ScoreType.GREEN_SCORE
+                    ),
+                    currentScoreImage = greenScoreImage,
+                    currentScoreImageContentDescription = greenScoreImageContentDescription,
+
+                    onDismiss = { showScoreInfoDialog = false },
+                    onLearnMore = {
+                        uriHandler.openUri("https://de.openfoodfacts.org/green-score")
+                    }
+                )
+            }
+        }
+    }
 
     LazyColumn {
         // Image
@@ -134,16 +186,32 @@ fun FoodDetailScreen(
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         Image(
-                            modifier = Modifier.height(80.dp).weight(1F),
-                            imageVector = food.getNutriScoreImage(LocalContext.current),
+                            modifier = Modifier
+                                .height(80.dp)
+                                .weight(1F)
+                                .clickable(
+                                    onClick = {
+                                        scoreInfoDialogType = ScoreType.NUTRI_SCORE
+                                        showScoreInfoDialog = true
+                                    }
+                                ),
+                            imageVector = nutriScoreImage,
                             contentScale = ContentScale.Fit,
-                            contentDescription = stringResource(R.string.nutri_score_name)
+                            contentDescription = nutriScoreImageContentDescription
                         )
                         Image(
-                            modifier = Modifier.height(80.dp).weight(1F),
-                            imageVector = food.getGreenScoreImage(LocalContext.current),
+                            modifier = Modifier
+                                .height(80.dp)
+                                .weight(1F)
+                                .clickable(
+                                    onClick = {
+                                        scoreInfoDialogType = ScoreType.GREEN_SCORE
+                                        showScoreInfoDialog = true
+                                    }
+                                ),
+                            imageVector = greenScoreImage,
                             contentScale = ContentScale.Fit,
-                            contentDescription = stringResource(R.string.green_score_name)
+                            contentDescription = greenScoreImageContentDescription
                         )
                     }
                 }
@@ -348,6 +416,53 @@ private fun NutritionTableElement(
             )
         }
     }
+}
+
+private enum class ScoreType {
+    NUTRI_SCORE, GREEN_SCORE
+}
+
+private fun getScoreExplanation(context: Context, score: AFood.Score, scoreType: ScoreType): String {
+    val stringResource: Int = when (score) {
+        AFood.Score.A -> {
+            when (scoreType) {
+                ScoreType.NUTRI_SCORE -> R.string.nutri_score_a_text
+                ScoreType.GREEN_SCORE -> R.string.green_score_a_text
+            }
+        }
+        AFood.Score.B -> {
+            when (scoreType) {
+                ScoreType.NUTRI_SCORE -> R.string.nutri_score_b_text
+                ScoreType.GREEN_SCORE -> R.string.green_score_b_text
+            }
+        }
+        AFood.Score.C -> {
+            when (scoreType) {
+                ScoreType.NUTRI_SCORE -> R.string.nutri_score_c_text
+                ScoreType.GREEN_SCORE -> R.string.green_score_c_text
+            }
+        }
+        AFood.Score.D -> {
+            when (scoreType) {
+                ScoreType.NUTRI_SCORE -> R.string.nutri_score_d_text
+                ScoreType.GREEN_SCORE -> R.string.green_score_d_text
+            }
+        }
+        AFood.Score.E -> {
+            when (scoreType) {
+                ScoreType.NUTRI_SCORE -> R.string.nutri_score_e_text
+                ScoreType.GREEN_SCORE -> R.string.green_score_e_text
+            }
+        }
+        AFood.Score.NA -> {
+            when (scoreType) {
+                ScoreType.NUTRI_SCORE -> R.string.nutri_score_na_text
+                ScoreType.GREEN_SCORE -> R.string.green_score_na_text
+            }
+        }
+    }
+
+    return context.getString(stringResource)
 }
 
 @Preview(showBackground = true)
