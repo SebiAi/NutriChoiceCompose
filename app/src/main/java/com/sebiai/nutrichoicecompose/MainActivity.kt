@@ -20,6 +20,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.sebiai.nutrichoicecompose.composables.MyTopAppBar
+import com.sebiai.nutrichoicecompose.navigation.AppNavHost
+import com.sebiai.nutrichoicecompose.navigation.getTitleForCurrentRoute
+import com.sebiai.nutrichoicecompose.navigation.routes.HomeNavRoute
+import com.sebiai.nutrichoicecompose.navigation.routes.navigateToSettingsScreen
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,7 +46,6 @@ fun MainActivityContent(
 
     // Navigation
     val navController = rememberNavController()
-    val startDestination = HomeNavRoute
 
     // App bar state
     var appBarShowBackArrow by remember { mutableStateOf(false) }
@@ -74,11 +77,9 @@ fun MainActivityContent(
                         },
                         showSettingsAction = appBarShowSettingsAction,
                         onSettingsActionClick = {
-                            navController.navigate(
-                                SettingsNavRoute(
-                                    appState.nutritionPreferences,
-                                    appState.filterPreferences
-                                )
+                            navController.navigateToSettingsScreen(
+                                appState.nutritionPreferences,
+                                appState.filterPreferences
                             )
                         }
                     )
@@ -91,7 +92,6 @@ fun MainActivityContent(
         ) { innerPadding ->
             AppNavHost(
                 navController,
-                startDestination,
                 appViewModel,
                 modifier = Modifier.padding(innerPadding)
             )
