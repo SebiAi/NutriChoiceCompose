@@ -75,7 +75,7 @@ fun SettingsScreen(
             )
         }
         Button(
-            enabled = isSelectionValid,
+            enabled = isSelectionValid && nutritionValues.countTrueBooleans() >= 1,
             onClick = { onSavePreferences(nutritionValues, filterPreferences) }
         ) {
             Text(
