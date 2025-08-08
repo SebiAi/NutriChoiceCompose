@@ -265,7 +265,31 @@ private fun ThirdPage(
 
 @Preview(showBackground = true)
 @Composable
-private fun OnboardingScreenPreview() {
+private fun OnboardingScreenFirstPagePreview() {
+    NutriChoiceComposeTheme {
+        OnboardingScreen(
+            modifier = Modifier.fillMaxSize(),
+            onOnboardingComplete = { _, _ -> },
+
+            initialPage = 0
+        )
+    }
+}
+@Preview(showBackground = true)
+@Composable
+private fun OnboardingScreenSecondPagePreview() {
+    NutriChoiceComposeTheme {
+        OnboardingScreen(
+            modifier = Modifier.fillMaxSize(),
+            onOnboardingComplete = { _, _ -> },
+
+            initialPage = 1
+        )
+    }
+}
+@Preview(showBackground = true)
+@Composable
+private fun OnboardingScreenThirdPagePreview() {
     NutriChoiceComposeTheme {
         OnboardingScreen(
             modifier = Modifier.fillMaxSize(),
