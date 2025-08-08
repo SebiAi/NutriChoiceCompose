@@ -13,12 +13,16 @@ import com.sebiai.nutrichoicecompose.R
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
 import com.sebiai.nutrichoicecompose.navigation.routes.FoodDetailScreenNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.HomeNavRoute
+import com.sebiai.nutrichoicecompose.navigation.routes.OnboardingNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.SearchResultsNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.SettingsNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.foodDetailScreenDestination
 import com.sebiai.nutrichoicecompose.navigation.routes.homeScreenDestination
 import com.sebiai.nutrichoicecompose.navigation.routes.navigateToFoodDetailScreen
+import com.sebiai.nutrichoicecompose.navigation.routes.navigateToHomeScreen
+import com.sebiai.nutrichoicecompose.navigation.routes.navigateToHomeScreenWithPopUp
 import com.sebiai.nutrichoicecompose.navigation.routes.navigateToSearchResultsScreen
+import com.sebiai.nutrichoicecompose.navigation.routes.onboardingScreenDestination
 import com.sebiai.nutrichoicecompose.navigation.routes.searchResultsScreenDestination
 import com.sebiai.nutrichoicecompose.navigation.routes.settingsScreenDestination
 import com.sebiai.nutrichoicecompose.screens.viewmodels.HomeAndSearchResultsScreenViewModel
@@ -41,6 +45,7 @@ fun getTitleForCurrentRoute(context: Context, route: String): String {
 fun AppNavHost(
     navController: NavHostController,
     appViewModel: AppViewModel,
+    startDestination: Any,
     modifier: Modifier = Modifier
 ) {
     val appState by appViewModel.appState.collectAsStateWithLifecycle()
@@ -50,9 +55,16 @@ fun AppNavHost(
 
     NavHost(
         navController,
-        startDestination = HomeNavRoute,
+        startDestination = startDestination,
         modifier
     ) {
+        onboardingScreenDestination(
+            onOnboardingComplete = { nutritionPreferences, filterPreferences ->
+                appViewModel.completeOnboarding(nutritionPreferences, filterPreferences)
+                navController.navigateToHomeScreenWithPopUp(OnboardingNavRoute)
+            }
+        )
+
         homeScreenDestination(
             sharedHomeAndSearchResultsScreenViewModel = sharedHomeAndSearchResultsScreenViewModel,
 

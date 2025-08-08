@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class AppState(
+    val isOnboardingComplete: Boolean = false,
     val nutritionPreferences: NutritionPreferences = NutritionPreferences(),
     val filterPreferences: FilterPreferences = FilterPreferences(),
 
@@ -40,6 +41,16 @@ class AppViewModel : ViewModel() {
         _appState.update { currentState ->
             currentState.copy(
                 filterPreferences = newFilterPreferences
+            )
+        }
+    }
+
+    fun completeOnboarding(nutritionPreferences: NutritionPreferences, filterPreferences: FilterPreferences) {
+        _appState.update {  currentState ->
+            currentState.copy(
+                isOnboardingComplete = true,
+                nutritionPreferences = nutritionPreferences,
+                filterPreferences = filterPreferences
             )
         }
     }

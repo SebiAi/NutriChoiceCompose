@@ -23,6 +23,7 @@ import com.sebiai.nutrichoicecompose.composables.MyTopAppBar
 import com.sebiai.nutrichoicecompose.navigation.AppNavHost
 import com.sebiai.nutrichoicecompose.navigation.getTitleForCurrentRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.HomeNavRoute
+import com.sebiai.nutrichoicecompose.navigation.routes.OnboardingNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.navigateToSettingsScreen
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
@@ -52,6 +53,9 @@ fun MainActivityContent(
     var appBarShowSettingsAction by remember { mutableStateOf(false) }
     var appBarTitle by remember { mutableStateOf("") }
 
+    // Determine start destination based on onboarding state
+    val startDestination = if (appState.isOnboardingComplete) HomeNavRoute else OnboardingNavRoute
+
     navController.addOnDestinationChangedListener { controller, destination, arguments ->
         appBarShowBackArrow = controller.previousBackStackEntry != null
 
@@ -69,6 +73,8 @@ fun MainActivityContent(
         Scaffold(
             modifier = modifier.fillMaxSize(),
             topBar = {
+                // Only show app bar after onboarding
+                if (appState.isOnboardingComplete) {
                     MyTopAppBar(
                         titleText = appBarTitle,
                         showBackArrow = appBarShowBackArrow,
@@ -83,6 +89,7 @@ fun MainActivityContent(
                             )
                         }
                     )
+                }
             },
             snackbarHost = {
                 SnackbarHost(
@@ -93,6 +100,7 @@ fun MainActivityContent(
             AppNavHost(
                 navController,
                 appViewModel,
+                startDestination,
                 modifier = Modifier.padding(innerPadding)
             )
         }

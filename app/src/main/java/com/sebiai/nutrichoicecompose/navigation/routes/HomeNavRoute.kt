@@ -19,6 +19,15 @@ internal object HomeNavRoute
 fun NavController.navigateToHomeScreen() {
     navigate(HomeNavRoute)
 }
+fun NavController.navigateToHomeScreenWithPopUp(
+    fromRoute: Any
+) {
+    navigate(HomeNavRoute) {
+        popUpTo(fromRoute) {
+            inclusive = true
+        }
+    }
+}
 
 fun NavGraphBuilder.homeScreenDestination(
     sharedHomeAndSearchResultsScreenViewModel: HomeAndSearchResultsScreenViewModel,
