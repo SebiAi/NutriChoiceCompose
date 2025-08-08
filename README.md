@@ -4,6 +4,8 @@ This is a rewrite with Jetpack Compose + Kotlin of *NutriChoice*, an Android app
 
 Minimum SDK version: 30
 
+UI made for the Pixel 5 API 30 Android Emulator
+
 ## Screenshots
 **Dark Mode:**
 <table>
