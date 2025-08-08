@@ -1,5 +1,6 @@
 package com.sebiai.nutrichoicecompose.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -89,6 +90,14 @@ fun OnboardingScreen(
     val pagerState = rememberPagerState(pageCount = pageContents::size, initialPage = initialPage)
     val scope = rememberCoroutineScope()
     val showDoneButton = pagerState.currentPage + 1 >= pagerState.pageCount
+
+    BackHandler(
+        enabled = pagerState.currentPage > 0
+    ) {
+        scope.launch {
+            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+        }
+    }
 
     Column(
         modifier = modifier
