@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
@@ -37,11 +38,10 @@ fun HorizontalCircularPagerIndicator(
 
     pagerState: PagerState,
     activeColor: Color = LocalContentColor.current,
-    inactiveColor: Color = activeColor.copy(alpha = 0.3F)
-
+    inactiveColor: Color = activeColor.copy(alpha = 0.3F),
+    indicatorSize: Dp = 8.dp
 ) {
     val pageCount = pagerState.pageCount
-    val indicatorSize = 8.dp
     val spacing = indicatorSize
     val indicatorSizePx = LocalDensity.current.run { indicatorSize.roundToPx() }
     val spacingPx = LocalDensity.current.run { spacing.roundToPx() }
