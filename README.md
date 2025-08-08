@@ -8,6 +8,11 @@ Minimum SDK version: 30
 **Dark Mode:**
 <table>
     <tr>
+        <th><img src="assets/OnboardingScreenPage1Dark.png" alt="Onboarding screen page 1 in dark mode"></th>
+        <th><img src="assets/OnboardingScreenPage2Dark.png" alt="Onboarding screen page 2 in dark mode"></th>
+        <th><img src="assets/OnboardingScreenPage3Dark.png" alt="Onboarding screen page 3 in dark mode"></th>
+    </tr>
+    <tr>
         <th><img src="assets/MainScreenDark.png" alt="Main screen in dark mode"></th>
         <th><img src="assets/SearchResultsScreenDark.png" alt="Search results screen in dark mode"></th>
         <th><img src="assets/FoodDetailScreenDark.png" alt="Food detail screen in dark mode"></th>
@@ -20,6 +25,11 @@ Minimum SDK version: 30
 
 **Light Mode:**
 <table>
+    <tr>
+        <th><img src="assets/OnboardingScreenPage1Light.png" alt="Onboarding screen page 1 in light mode"></th>
+        <th><img src="assets/OnboardingScreenPage2Light.png" alt="Onboarding screen page 2 in light mode"></th>
+        <th><img src="assets/OnboardingScreenPage3Light.png" alt="Onboarding screen page 3 in light mode"></th>
+    </tr>
     <tr>
         <th><img src="assets/MainScreenLight.png" alt="Main screen in light mode"></th>
         <th><img src="assets/SearchResultsScreenLight.png" alt="Search results screen in light mode"></th>
