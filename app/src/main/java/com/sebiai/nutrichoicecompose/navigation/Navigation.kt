@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import com.sebiai.nutrichoicecompose.AppViewModel
 import com.sebiai.nutrichoicecompose.R
 import com.sebiai.nutrichoicecompose.dataclasses.AFood
+import com.sebiai.nutrichoicecompose.dataclasses.FilterState
 import com.sebiai.nutrichoicecompose.navigation.routes.FoodDetailScreenNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.HomeNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.OnboardingNavRoute
@@ -61,6 +62,7 @@ fun AppNavHost(
         onboardingScreenDestination(
             onOnboardingComplete = { nutritionPreferences, filterPreferences ->
                 appViewModel.completeOnboarding(nutritionPreferences, filterPreferences)
+                sharedHomeAndSearchResultsScreenViewModel.updateFilterState(FilterState(filterPreferences))
                 navController.navigateToHomeScreenWithPopUp(OnboardingNavRoute)
             }
         )
