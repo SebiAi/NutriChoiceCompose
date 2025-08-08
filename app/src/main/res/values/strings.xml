@@ -39,6 +39,13 @@
     <string name="ok_confirmation">OK</string>
     <string name="learn_more">Learn More</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_to">Welcome to</string>
+    <string name="onboarding_app_description">Smart food choices, made easy!\n\nWith NutriChoice, you can explore ingredients and meals tailored to your goals.\nFurthermore we use Nutri- and GreenScores to give you insight into health and sustainability.</string>
+    <string name="onboarding_introducing_our">Introducing our</string>
+    <string name="onboarding_qr_scanner_introduction_heading">QR Scanner</string>
+    <string name="onboarding_qr_scanner_description">All partnered restaurants/cafeterias have their own personalized QR Code.\nScan it to see more information about their meals.</string>
+
     <!-- RestaurantIndicatorInfoDialog -->
     <string name="restaurant_indicator_description">This icon indicates that this food is available in a certain restaurant.</string>
 
