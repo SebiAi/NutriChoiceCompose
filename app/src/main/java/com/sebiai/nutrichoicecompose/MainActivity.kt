@@ -32,6 +32,7 @@ import com.sebiai.nutrichoicecompose.navigation.AppNavHost
 import com.sebiai.nutrichoicecompose.navigation.getTitleForCurrentRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.HomeNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.OnboardingNavRoute
+import com.sebiai.nutrichoicecompose.navigation.routes.navigateToQRScannerScreen
 import com.sebiai.nutrichoicecompose.navigation.routes.navigateToSettingsScreen
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
 
@@ -119,7 +120,7 @@ fun MainActivityContent(
                     )
                 ) {
                     QRScannerFloatingActionButton(
-                        onClick = {}
+                        onClick = navController::navigateToQRScannerScreen
                     )
                 }
             }

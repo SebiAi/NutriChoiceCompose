@@ -15,6 +15,7 @@ import com.sebiai.nutrichoicecompose.dataclasses.FilterState
 import com.sebiai.nutrichoicecompose.navigation.routes.FoodDetailScreenNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.HomeNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.OnboardingNavRoute
+import com.sebiai.nutrichoicecompose.navigation.routes.QRScannerNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.SearchResultsNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.SettingsNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.foodDetailScreenDestination
@@ -23,6 +24,7 @@ import com.sebiai.nutrichoicecompose.navigation.routes.navigateToFoodDetailScree
 import com.sebiai.nutrichoicecompose.navigation.routes.navigateToHomeScreenWithPopUp
 import com.sebiai.nutrichoicecompose.navigation.routes.navigateToSearchResultsScreen
 import com.sebiai.nutrichoicecompose.navigation.routes.onboardingScreenDestination
+import com.sebiai.nutrichoicecompose.navigation.routes.qrScannerScreenDestination
 import com.sebiai.nutrichoicecompose.navigation.routes.searchResultsScreenDestination
 import com.sebiai.nutrichoicecompose.navigation.routes.settingsScreenDestination
 import com.sebiai.nutrichoicecompose.screens.viewmodels.HomeAndSearchResultsScreenViewModel
@@ -36,6 +38,7 @@ fun getTitleForCurrentRoute(context: Context, route: String): String {
         SettingsNavRoute::class.qualifiedName!! -> R.string.settings_screen_title
         SearchResultsNavRoute::class.qualifiedName!! -> R.string.search_results_screen_title
         FoodDetailScreenNavRoute::class.qualifiedName!! -> R.string.food_detail_screen_title
+        QRScannerNavRoute::class.qualifiedName!! -> R.string.qr_scanner_screen_title
         else -> null
     }
     return titleRes?.let { context.getString(titleRes) }?: ""
@@ -102,5 +105,6 @@ fun AppNavHost(
                 )
             }
         )
+        qrScannerScreenDestination()
     }
 }

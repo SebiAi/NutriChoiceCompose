@@ -61,6 +61,7 @@
     <string name="search_results_screen_title">Search Results</string>
     <string name="settings_screen_title">Settings</string>
     <string name="food_detail_screen_title">Details</string>
+    <string name="qr_scanner_screen_title">Menu Scanner</string>
 
     <!-- Price string construction -->
     <string name="price_symbol">$</string>
