@@ -22,6 +22,10 @@ UI made for the Pixel 5 API 30 Android Emulator
     <tr>
         <th><img src="assets/FoodDetailScreenIngredientsDark.png" alt="Food detail screen scrolled down to the ingredients in dark mode"></th>
         <th><img src="assets/SettingsScreenDark.png" alt="Settings screen in dark mode"></th>
+        <th><img src="assets/QRScannerScreenPermissionRequestDark.png" alt="QR scanner screen permission request in dark mode"></th>
+    </tr>
+    <tr>
+        <th><img src="assets/QRScannerScreenDark.png" alt="QR scanner screen in dark mode"></th>
     </tr>
 </table>
 
@@ -40,5 +44,9 @@ UI made for the Pixel 5 API 30 Android Emulator
     <tr>
         <th><img src="assets/FoodDetailScreenIngredientsLight.png" alt="Food detail screen scrolled down to the ingredients in light mode"></th>
         <th><img src="assets/SettingsScreenLight.png" alt="Settings screen in light mode"></th>
+        <th><img src="assets/QRScannerScreenPermissionRequestLight.png" alt="QR scanner screen permission request in light mode"></th>
+    </tr>
+    <tr>
+        <th><img src="assets/QRScannerScreenLight.png" alt="QR scanner screen in light mode"></th>
     </tr>
 </table>
