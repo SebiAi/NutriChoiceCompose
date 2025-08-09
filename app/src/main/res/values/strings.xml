@@ -39,6 +39,9 @@
     <string name="ok_confirmation">OK</string>
     <string name="learn_more">Learn More</string>
     <string name="qr_scanner_hint">Scan a NutriChoice menu QR-Code at a\nrestaurant to see its meals!</string>
+    <string name="qr_scanner_camera_permission_description_with_rationale">We need camera permission to scan the menu QR-Codes.\nProcessing happens on device and all captured data is deleted immediately after.\nGrant us permission and let's get to scanning!</string>
+    <string name="qr_scanner_camera_permission_description">We need camera permission to scan the menu QR-Codes.\nGrant us permission and let's get to scanning!</string>
+    <string name="request_permission">Request permission</string>
 
     <!-- Onboarding -->
     <string name="onboarding_welcome_to">Welcome to</string>

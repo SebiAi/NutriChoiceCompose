@@ -125,9 +125,9 @@ private fun CameraPermissionNotGrantedContent(
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
     ) {
         val text = if (showRationale) {
-            "We need camera permission to scan the menu QR-Codes.\nProcessing happens on device and all captured data is deleted immediately after.\nGrant us permission and let's get to scanning!"
+            stringResource(R.string.qr_scanner_camera_permission_description_with_rationale)
         } else {
-            "We need camera permission to scan the menu QR-Codes.\nGrant us permission and let's get to scanning!"
+            stringResource(R.string.qr_scanner_camera_permission_description)
         }
         Icon(
             modifier = Modifier.size(32.dp),
@@ -142,7 +142,7 @@ private fun CameraPermissionNotGrantedContent(
             onClick = onPermissionRequest
         ) {
             Text(
-                text = "Request permission"
+                text = stringResource(R.string.request_permission)
             )
         }
     }
