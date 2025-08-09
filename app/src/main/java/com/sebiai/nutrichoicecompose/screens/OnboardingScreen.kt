@@ -14,10 +14,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
-import androidx.compose.material.icons.outlined.QrCodeScanner
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,6 +38,7 @@ import com.sebiai.nutrichoicecompose.composables.FilterPreferenceSelection
 import com.sebiai.nutrichoicecompose.composables.HorizontalCircularPagerIndicator
 import com.sebiai.nutrichoicecompose.composables.NutritionPreference
 import com.sebiai.nutrichoicecompose.composables.NutritionPreferenceSelection
+import com.sebiai.nutrichoicecompose.composables.QRScannerFloatingActionButton
 import com.sebiai.nutrichoicecompose.dataclasses.FilterPreferences
 import com.sebiai.nutrichoicecompose.dataclasses.NutritionPreferences
 import com.sebiai.nutrichoicecompose.ui.theme.NutriChoiceComposeTheme
@@ -217,14 +216,9 @@ private fun SecondPage() {
             modifier = Modifier.weight(1F),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            FloatingActionButton(
+            QRScannerFloatingActionButton(
                 onClick = {}
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.QrCodeScanner,
-                    contentDescription = null
-                )
-            }
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 style = MaterialTheme.typography.titleLarge,

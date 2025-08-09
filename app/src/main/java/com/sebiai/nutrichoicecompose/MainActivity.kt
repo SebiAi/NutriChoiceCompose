@@ -5,7 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,6 +27,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.sebiai.nutrichoicecompose.composables.MyTopAppBar
+import com.sebiai.nutrichoicecompose.composables.QRScannerFloatingActionButton
 import com.sebiai.nutrichoicecompose.navigation.AppNavHost
 import com.sebiai.nutrichoicecompose.navigation.getTitleForCurrentRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.HomeNavRoute
@@ -53,7 +58,7 @@ fun MainActivityContent(
 
     // App bar state
     var appBarShowBackArrow by remember { mutableStateOf(false) }
-    var appBarShowSettingsAction by remember { mutableStateOf(false) }
+    var onHomeScreen by remember { mutableStateOf(false) }
     var appBarTitle by remember { mutableStateOf("") }
 
     // Determine start destination based on onboarding state
@@ -68,7 +73,7 @@ fun MainActivityContent(
             val routeQualifiedName = route.substringBefore('/')
             appBarTitle = getTitleForCurrentRoute(controller.context, route)
 
-            appBarShowSettingsAction = routeQualifiedName == HomeNavRoute::class.qualifiedName!!
+            onHomeScreen = routeQualifiedName == HomeNavRoute::class.qualifiedName!!
         }
     }
 
@@ -88,7 +93,7 @@ fun MainActivityContent(
                         onBackArrowPressed = {
                             navController.popBackStack()
                         },
-                        showSettingsAction = appBarShowSettingsAction,
+                        showSettingsAction = onHomeScreen,
                         onSettingsActionClick = {
                             navController.navigateToSettingsScreen(
                                 appState.nutritionPreferences,
@@ -102,6 +107,21 @@ fun MainActivityContent(
                 SnackbarHost(
                     hostState = appState.snackBarHostState
                 )
+            },
+            floatingActionButton = {
+                AnimatedVisibility(
+                    visible = onHomeScreen,
+                    enter = fadeIn() + slideInHorizontally(
+                        initialOffsetX = { it }
+                    ),
+                    exit = fadeOut() + slideOutHorizontally(
+                        targetOffsetX = { it }
+                    )
+                ) {
+                    QRScannerFloatingActionButton(
+                        onClick = {}
+                    )
+                }
             }
         ) { innerPadding ->
             AppNavHost(
