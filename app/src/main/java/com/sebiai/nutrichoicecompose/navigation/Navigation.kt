@@ -20,7 +20,6 @@ import com.sebiai.nutrichoicecompose.navigation.routes.SettingsNavRoute
 import com.sebiai.nutrichoicecompose.navigation.routes.foodDetailScreenDestination
 import com.sebiai.nutrichoicecompose.navigation.routes.homeScreenDestination
 import com.sebiai.nutrichoicecompose.navigation.routes.navigateToFoodDetailScreen
-import com.sebiai.nutrichoicecompose.navigation.routes.navigateToHomeScreen
 import com.sebiai.nutrichoicecompose.navigation.routes.navigateToHomeScreenWithPopUp
 import com.sebiai.nutrichoicecompose.navigation.routes.navigateToSearchResultsScreen
 import com.sebiai.nutrichoicecompose.navigation.routes.onboardingScreenDestination
